@@ -1,0 +1,33 @@
+### 1. دریافت فهرست مقالات
+GET http://localhost:3000/api/articles
+
+### 2. ساخت مقاله آزمایشی
+POST http://localhost:3000/api/articles
+Content-Type: application/json
+
+{
+    "title":"my second article",
+    "slug":"my-second-article",
+    "summary":"my first article blog",
+    "content":"this is test text",
+    "published":false
+}
+
+### 3.دریافت مقاله با ایدی
+GET http://localhost:3000/api/articles/6aca7fe47d35059eab36c3bb
+
+### 4. ادیت مقاله
+PUT http://localhost:3000/api/articles/6aca7fe47d35059eab36c3bb
+Content-Type: application/json
+
+{
+    "title":"my 1 article",
+    "slug":"my-1-article",
+    "summary":"my 1 article blog",
+    "content":"this is test text1",
+    "published":false
+}
+
+### 5. پاک کردن مقاله
+DELETE  http://localhost:3000/api/articles/6aca7fe47d35059eab36c3bb
+Content-Type: application/json

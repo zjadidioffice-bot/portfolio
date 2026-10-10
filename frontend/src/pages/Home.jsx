@@ -50,7 +50,7 @@ function Home() {
                     projects.slice(0,showAll?projects.length:2)
                     .map((project) => (
                         <ProjectCard
-                            key={project._id}
+                            key={project.id}
                             title={project.title}
                             description={project.description}
                             link={project.link}
