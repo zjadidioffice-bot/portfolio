@@ -4,6 +4,8 @@ const dotenv=require("dotenv");
 const connectDB=require("./config/db")
 const contactRoutes=require("./routes/contactRoutes")
 const articleRoutes=require("./routes/articleRoutes");
+const projectRoutes=require("./routes/projectRoutes");
+
 dotenv.config();
 const app=express();
 const PORT=process.env.PORT||3000;
@@ -14,7 +16,9 @@ app.use(cors({
 
 app.use(express.json());
 app.use("/api/contact",contactRoutes);
-app.use("/api/articles",articleRoutes)
+app.use("/api/articles",articleRoutes);
+app.use("/api/projects",projectRoutes)
+
 async function startServer() {
     await connectDB();
     app.listen(PORT,()=>{
