@@ -10,7 +10,7 @@ deleteProject
 const router=express.Router();
 
 router.post("/",createProject);
-router.get("/",getProjectById);
+router.get("/",getProjects);
 
 router.get("/:id",getProjectById);
 router.put("/:id",updateProject);

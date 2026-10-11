@@ -14,10 +14,28 @@ async function createArticle(req, res) {
         })
     }
 }
+
 async function getArticles(req, res) {
     try {
-        const articles = await Article.find();
-        res.status(200).json(articles);
+        const {category,search}=req.query;
+        const filter={
+            published:true
+        };
+        if(category){
+            filter.category=category;
+        }
+        if(search){
+            filter.$or=[
+                {title:{$regex:search,$options:"i"}},
+                {summary:{$regex:search,$options:"i"}},
+                {content:{$regex:search,$options:"i"}}
+            ];
+        }
+
+        const articles=await Article.find(filter).sort({
+            createdAt:-1
+        });
+        res.status(200).json(articles)
     } catch (error) {
         console.error("get articles error", error.message);
         res.status(500).json({

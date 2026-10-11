@@ -6,11 +6,12 @@ POST http://localhost:3000/api/articles
 Content-Type: application/json
 
 {
-    "title":"my second article",
-    "slug":"my-second-article",
-    "summary":"my first article blog",
+    "title":"my web article",
+    "slug":"my-web-article",
+    "summary":"my web article blog",
     "content":"this is test text",
-    "published":false
+    "category":"web",
+    "published":true
 }
 
 ### 3.دریافت مقاله با ایدی
@@ -31,3 +32,45 @@ Content-Type: application/json
 ### 5. پاک کردن مقاله
 DELETE  http://localhost:3000/api/articles/6aca7fe47d35059eab36c3bb
 Content-Type: application/json
+
+
+### 1. دریافت فهرست پروژه ها
+GET http://localhost:3000/api/projects
+
+### 2. ساخت پروژه آزمایشی
+POST http://localhost:3000/api/projects
+Content-Type: application/json
+
+{
+    "title":"my 2 project",
+    "description":"my 2 project"
+}
+### 3. دریافت یک پروژه
+GET http://localhost:3000/api/projects/6acb0d4d1c612cc2cd92a449
+
+### 4. ادیت پروژه
+PUT http://localhost:3000/api/projects/6acb0d4d1c612cc2cd92a449
+Content-Type: application/json
+
+{
+    "title":"my lovely project"
+}
+
+### 5. پاک کردن پروژه
+DELETE  http://localhost:3000/api/projects/6acb0d4d1c612cc2cd92a449
+Content-Type: application/json
+
+### همه مقاله‌های منتشرشده
+GET http://localhost:3000/api/articles
+
+### فیلتر دسته‌بندی
+GET http://localhost:3000/api/articles?category=web
+
+### جست‌وجو
+GET http://localhost:3000/api/articles?search=artic
+
+### جست‌وجو همراه با دسته‌بندی
+GET http://localhost:3000/api/articles?category=web&search=art
+
+
+curl.exe -X POST "http://localhost:3000/api/uploads" -F "image=@D:\Images\sample.png"
