@@ -1,34 +1,29 @@
 import ProjectCard from "../components/ProjectCard";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 function Home() {
     const [showAll, setShowAll] = useState(false);
+    const [projects, setProjects] = useState([]);
+    const [loading, setLoading] = useState(true)
+    const [error, setError] = useState("");
 
-    const projects = [
-        {
-            id: 1,
-            title: "todo app",
-            description: "A full-stack todo application built with React, Node.js and MongoDB.",
-            link: "https://todo.zahrajadidi.ir"
-        },
-        {
-            id: 2,
-            title: "chat app",
-            description: "A real-time chat application built with React and Node.js.",
-            link: "https://chat.zahrajadidi.ir"
-        },
-                {
-            id: 3,
-            title: "blog app",
-            description: "A real-time chat application built with React and Node.js.",
-            link: "https://chat.zahrajadidi.ir"
-        },
-                {
-            id: 4,
-            title: "resume app",
-            description: "A real-time chat application built with React and Node.js.",
-            link: "https://chat.zahrajadidi.ir"
-        }
-    ]
+    useEffect(()=>{
+        fetch("http://localhost:3000/api/projects")
+        .then((response)=>{
+            if(!response.ok){
+                throw new Error("failed to load projects")
+            }
+            return response.json();
+        }).then((data)=>{
+            setProjects(data);
+        }).catch((error)=>{
+            setError(error.message);
+        })
+        .finally(()=>{setLoading(false)})
+    },[]);
+
+    const featuredProjects=projects.filter((project)=>project.featured);
+    const visibleProjects=showAll?projects:featuredProjects.slice(0,2);
+
     return (
         <>
             <section>
@@ -47,8 +42,7 @@ function Home() {
                 </p>
                 {
 
-                    projects.slice(0,showAll?projects.length:2)
-                    .map((project) => (
+                    visibleProjects.map((project) => (
                         <ProjectCard
                             key={project.id}
                             title={project.title}
