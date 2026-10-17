@@ -8,7 +8,7 @@ async function createArticle(req, res) {
             article
         });
     } catch (error) {
-        console.log("create article error")
+        console.log("create article error",error)
         res.status(500).json({
             message: "fail to create article"
         })

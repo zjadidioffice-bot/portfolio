@@ -9,11 +9,12 @@ import Contact from "./pages/Contact"
 import MainLayout from './layouts/MainLayout'
 import ArticleDetails from './pages/ArticleDetails'
 import ArticleForm from './admin/ArticleForm'
+import ArticlesManagement from './admin/ArticlesManagement'
 function App() {
   const [count, setCount] = useState(0)
 
   return (
-    <ArticleForm/>
+    <ArticlesManagement/>
     // <BrowserRouter>
     //   <MainLayout>
     //     <Routes>

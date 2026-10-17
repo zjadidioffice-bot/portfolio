@@ -4,39 +4,105 @@ function ArticleForm() {
     const [formData, setFormData] = useState({
         title: "",
         category: "",
-        content: ""
+        content: "",
+        slug: ""
     });
-    function handleChange(event) {
-        const { name, value } = event.target;
-        setFormData((previousData) =>
-        ({
+    const [isSubmitting, setIsSubmitting] = useState(false);
+    const [message,setMessage]=useState("");
+    const [errorMessage,setErrorMessage]=useState("");
+
+    function createSlug(text) {
+        return text
+            .trim()
+            .toLowerCase()
+            .replace(/\s+/g, "-")
+            .replace(/[^a-z0-9-]/g, "")
+            .replace(/-+/g, "-");
+    }
+function handleChange(event) {
+    const { name, value } = event.target;
+
+    setFormData((previousData) => {
+        const updatedData = {
             ...previousData,
             [name]: value,
-        }));
-    }
+        };
+
+        if (name === "title") {
+            updatedData.slug = createSlug(value);
+        }
+
+        return updatedData;
+    });
+}
+//     function handleChange(event) {
+//         const { name, value } = event.target;
+//         console.log("name:", name, "value:", value);
+// console.log("slug:", createSlug(value));
+//         setFormData((previousData) =>
+//         ({
+//             ...previousData,
+//             [name]: value,
+//             ...(name === "title" && {
+//                 slug: createSlug(value),
+//             }),
+//         }));
+//     }
 
     async function handleSubmit(event) {
         event.preventDefault();
-        
-        const response=await fetch(
-            "http://localhost:3000/api/articles",
-            {
-                method:"POST",
-                headers:{
-                    "Content-Type":"application/json",
-                },
-                body:JSON.stringify(formData),
-            }
-        );
-        const data=await response.json();
-        if(!response.ok){
-            alert(data.message||"ذخیره مقاله ناموفق بود")
+
+        if (
+            !formData.title.trim() ||
+            !formData.category.trim() ||
+            !formData.content.trim()
+        ) {
+            setErrorMessage("عنوان ، دسته بندی و متن مقاله را وارد کن")
+            setMessage("")
             return;
         }
-        alert("مقاله با موفقیت ذخیره شد...")    }
+        setErrorMessage("")
+        setMessage("")
+        setIsSubmitting(true)
+
+        try {
+            const response = await fetch(
+                "http://localhost:3000/api/articles",
+                {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify(formData),
+                }
+            );
+            const data = await response.json();
+            if (!response.ok) {
+                setErrorMessage("خطا"||data.message)
+                return;
+            }
+            setMessage("مقاله با موفقیت ذخیره شد...")
+       setFormData({
+        title:"",
+        category:"",
+        content:"",
+        slug:""
+       })
+        } catch (error) {
+            console.error("خطای ذخیره مقاله", error)
+            setErrorMessage("ارتباط با سرور برقرار نشد")
+        }
+        finally {
+            setIsSubmitting(false)
+        }
+
+
+    }
     return (
-        <div>
+        <form onSubmit={handleSubmit}>
             <h1>ساخت مقاله</h1>
+            {message &&<p>{message}</p>}
+            {errorMessage&&<p>{errorMessage}</p>}
             <label htmlFor="title">عنوان مقاله</label>
             <input
                 id="title"
@@ -59,13 +125,21 @@ function ArticleForm() {
                 value={formData.category}
                 onChange={handleChange}
             />
-
+            <label htmlFor="slug"> اسلاگ:</label>
+            <input
+                id="slug"
+                name="slug"
+                value={formData.slug}
+                onChange={handleChange}
+            />
+            <button type="submit" disabled={isSubmitting}>{isSubmitting?"در حال ذخیره ...":"ذخیره مقاله"}</button>
             <h3>نمایش اطلاعات:</h3>
             <p>عنوان:{formData.title}</p>
             <p>دسته بندی:{formData.category}</p>
             <p>متن:{formData.content}</p>
+            <p>اسلاگ:{formData.slug}</p>
 
-        </div>
+        </form>
     );
 }
 export default ArticleForm;
