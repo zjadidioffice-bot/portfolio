@@ -1,15 +1,24 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
-function ArticleForm() {
+function ArticleForm({ articleToEdit, onSave }) {
     const [formData, setFormData] = useState({
-        title: "",
-        category: "",
-        content: "",
-        slug: ""
+        title: articleToEdit?.title || "",
+        category: articleToEdit?.category || "",
+        content: articleToEdit?.content || "",
+        slug: articleToEdit?.slug || ""
     });
+
+    useEffect(() => {
+        setFormData({
+            title: articleToEdit?.title || "",
+            category: articleToEdit?.category || "",
+            content: articleToEdit?.content || "",
+            slug: articleToEdit?.slug || ""
+        });
+    }, [articleToEdit])
     const [isSubmitting, setIsSubmitting] = useState(false);
-    const [message,setMessage]=useState("");
-    const [errorMessage,setErrorMessage]=useState("");
+    const [message, setMessage] = useState("");
+    const [errorMessage, setErrorMessage] = useState("");
 
     function createSlug(text) {
         return text
@@ -19,35 +28,23 @@ function ArticleForm() {
             .replace(/[^a-z0-9-]/g, "")
             .replace(/-+/g, "-");
     }
-function handleChange(event) {
-    const { name, value } = event.target;
+    function handleChange(event) {
+        const { name, value } = event.target;
 
-    setFormData((previousData) => {
-        const updatedData = {
-            ...previousData,
-            [name]: value,
-        };
+        setFormData((previousData) => {
+            const updatedData = {
+                ...previousData,
+                [name]: value,
+            };
 
-        if (name === "title") {
-            updatedData.slug = createSlug(value);
-        }
+            if (name === "title") {
+                updatedData.slug = createSlug(value);
+            }
 
-        return updatedData;
-    });
-}
-//     function handleChange(event) {
-//         const { name, value } = event.target;
-//         console.log("name:", name, "value:", value);
-// console.log("slug:", createSlug(value));
-//         setFormData((previousData) =>
-//         ({
-//             ...previousData,
-//             [name]: value,
-//             ...(name === "title" && {
-//                 slug: createSlug(value),
-//             }),
-//         }));
-//     }
+            return updatedData;
+        });
+    }
+
 
     async function handleSubmit(event) {
         event.preventDefault();
@@ -66,28 +63,36 @@ function handleChange(event) {
         setIsSubmitting(true)
 
         try {
-            const response = await fetch(
-                "http://localhost:3000/api/articles",
-                {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                    body: JSON.stringify(formData),
-                }
-            );
+            const url = articleToEdit
+                ?
+                `http://localhost:3000/api/articles/${articleToEdit._id}`
+                : "http://localhost:3000/api/articles";
+            const response = await fetch(url, {
+                method: articleToEdit ? "PUT" : "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(formData),
+            })
+       
             const data = await response.json();
             if (!response.ok) {
-                setErrorMessage("خطا"||data.message)
+                setErrorMessage("خطا" || data.message)
                 return;
             }
-            setMessage("مقاله با موفقیت ذخیره شد...")
-       setFormData({
-        title:"",
-        category:"",
-        content:"",
-        slug:""
-       })
+            setMessage(
+                articleToEdit?
+                "مقاله با موفقیت ویرایش شد":
+                "مقاله با موفقیت ذخیره شد...");
+                if(onSave){
+                    onSave()
+                }
+            setFormData({
+                title: "",
+                category: "",
+                content: "",
+                slug: ""
+            })
         } catch (error) {
             console.error("خطای ذخیره مقاله", error)
             setErrorMessage("ارتباط با سرور برقرار نشد")
@@ -101,8 +106,8 @@ function handleChange(event) {
     return (
         <form onSubmit={handleSubmit}>
             <h1>ساخت مقاله</h1>
-            {message &&<p>{message}</p>}
-            {errorMessage&&<p>{errorMessage}</p>}
+            {message && <p>{message}</p>}
+            {errorMessage && <p>{errorMessage}</p>}
             <label htmlFor="title">عنوان مقاله</label>
             <input
                 id="title"
@@ -132,7 +137,7 @@ function handleChange(event) {
                 value={formData.slug}
                 onChange={handleChange}
             />
-            <button type="submit" disabled={isSubmitting}>{isSubmitting?"در حال ذخیره ...":"ذخیره مقاله"}</button>
+            <button type="submit" disabled={isSubmitting}>{isSubmitting ? "در حال ذخیره ..." : "ذخیره مقاله"}</button>
             <h3>نمایش اطلاعات:</h3>
             <p>عنوان:{formData.title}</p>
             <p>دسته بندی:{formData.category}</p>

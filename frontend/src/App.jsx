@@ -10,11 +10,13 @@ import MainLayout from './layouts/MainLayout'
 import ArticleDetails from './pages/ArticleDetails'
 import ArticleForm from './admin/ArticleForm'
 import ArticlesManagement from './admin/ArticlesManagement'
+import ProjectForm from './admin/ProjectForm'
+import ProjectManagement from './admin/ProjectManagement'
 function App() {
   const [count, setCount] = useState(0)
 
   return (
-    <ArticlesManagement/>
+    <ProjectManagement/>
     // <BrowserRouter>
     //   <MainLayout>
     //     <Routes>

@@ -1,28 +1,35 @@
 import { useEffect, useState } from "react";
-
+import ArticleForm from "./ArticleForm";
 function ArticlesManagement() {
     const [articles, setArticles] = useState([])
+    const [articleToEdit, setArticleToEdit] = useState(null)
     const [error, setError] = useState("");
 
-    useEffect(() => {
-        async function fetchArticles() {
-            try {
-                const response = await fetch(
-                    "http://localhost:3000/api/articles"
-                );
-                if (!response.ok) {
-                    throw new Error("دریافت مقالات ناموفق بود....")
 
-                }
-                const data = await response.json();
-                setArticles(data);
-            } catch (error) {
-                setError(error.message)
+    async function fetchArticles() {
+        try {
+            const response = await fetch(
+                "http://localhost:3000/api/articles"
+            );
+            if (!response.ok) {
+                throw new Error("دریافت مقالات ناموفق بود....")
+
             }
+            const data = await response.json();
+            setArticles(data);
+            setError("")
+        } catch (error) {
+            setError(error.message)
         }
+    }
+
+    useEffect(() => {
         fetchArticles();
     }, []);
-
+    function handleSave() {
+        setArticleToEdit(null)
+        fetchArticles()
+    }
     async function handleDelete(id) {
         const confirmed = window.confirm("آیا از حذف مقاله مطمینی؟")
         if (!confirmed) { return; }
@@ -46,9 +53,15 @@ function ArticlesManagement() {
         }
     }
 
+
     return (
         <div>
             <h1>مدیریت مقالات</h1>
+            <ArticleForm
+                articleToEdit={articleToEdit}
+                onSave={handleSave}
+            />
+
             {error && <p>{error}</p>}
             {articles.length === 0 && !error && (
                 <p>مقاله ای برای نمایش وجود ندارد</p>
@@ -58,7 +71,8 @@ function ArticlesManagement() {
                     <h3>{article.title}</h3>
                     <p>دسته بندی:{article.category}</p>
                     <p>اسلاگ:{article.slug}</p>
-                    <button onClick={()=>handleDelete(article._id)}>حذف</button>
+                    <button onClick={() => handleDelete(article._id)}>حذف</button>
+                    <button onClick={() => setArticleToEdit(article)}>ویرایش</button>
                 </div>
             ))}
         </div>
