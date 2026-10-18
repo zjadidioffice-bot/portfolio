@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-
+import ImageUpload from "../components/ImageUpload";
 function ProjectForm({ projectToEdit, onSave }) {
     const [formData, setFormData] = useState({
         title: "",
@@ -92,13 +92,22 @@ function ProjectForm({ projectToEdit, onSave }) {
                 value={formData.demoUrl}
                 onChange={handleChange}
             />
-            <label htmlFor="title">آدرس تصویر</label>
+            <ImageUpload
+            value={formData.image}
+            onChange={(imageUrl)=>
+                setFormData((previousData)=>({
+                    ...previousData,
+                    image:imageUrl
+                }))
+            }
+            />
+            {/* <label htmlFor="title">آدرس تصویر</label>
             <input
                 id="image"
                 name="image"
                 value={formData.image}
                 onChange={handleChange}
-            />
+            /> */}
             <label htmlFor="title">پروژه ویژه است؟</label>
             <input
                 type="checkbox"

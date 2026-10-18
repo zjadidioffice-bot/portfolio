@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-
+import ImageUpload from "../components/ImageUpload";
 function ArticleForm({ articleToEdit, onSave }) {
     const [formData, setFormData] = useState({
         title: articleToEdit?.title || "",
@@ -136,6 +136,15 @@ function ArticleForm({ articleToEdit, onSave }) {
                 name="slug"
                 value={formData.slug}
                 onChange={handleChange}
+            />
+            <ImageUpload
+            value={formData.image}
+            onChange={(imageUrl)=>
+                setFormData((previousData)=>({
+                    ...previousData,
+                    image:imageUrl
+                }))
+            }
             />
             <button type="submit" disabled={isSubmitting}>{isSubmitting ? "در حال ذخیره ..." : "ذخیره مقاله"}</button>
             <h3>نمایش اطلاعات:</h3>

@@ -5,7 +5,7 @@ function uploadImage(req,res){
             message:"please select image"
         });
     }
-    const imageUrl=`/uploads/${req.file.fileName}`;
+    const imageUrl=`/uploads/${req.file.filename}`;
 
     return res.status(201).json({
         message:"image uploaded successfully",
