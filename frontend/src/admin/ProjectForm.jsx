@@ -78,14 +78,17 @@ function ProjectForm({ projectToEdit, onSave }) {
                 value={formData.title}
                 onChange={handleChange}
             />
-            <label htmlFor="title">توضیحات پروژه</label>
+            <br />
+            <label htmlFor="description">توضیحات پروژه</label>
             <input
                 id="description"
                 name="description"
                 value={formData.description}
                 onChange={handleChange}
             />
-            <label htmlFor="title">لینک اجرا پروژه</label>
+            <br />
+
+            <label htmlFor="demoUrl">لینک اجرا پروژه</label>
             <input
                 id="demoUrl"
                 name="demoUrl"
@@ -93,13 +96,13 @@ function ProjectForm({ projectToEdit, onSave }) {
                 onChange={handleChange}
             />
             <ImageUpload
-            value={formData.image}
-            onChange={(imageUrl)=>
-                setFormData((previousData)=>({
-                    ...previousData,
-                    image:imageUrl
-                }))
-            }
+                value={formData.image}
+                onChange={(imageUrl) =>
+                    setFormData((previousData) => ({
+                        ...previousData,
+                        image: imageUrl
+                    }))
+                }
             />
             {/* <label htmlFor="title">آدرس تصویر</label>
             <input
@@ -116,7 +119,7 @@ function ProjectForm({ projectToEdit, onSave }) {
                 onChange={handleChange}
             />
             <button type="submit">
-                {projectToEdit?"ثبت پروژه":"ذخیره تغیرات"}
+                {projectToEdit ? "ثبت پروژه" : "ذخیره تغیرات"}
             </button>
         </form>
     );

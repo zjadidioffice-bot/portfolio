@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import ProjectForm from "./ProjectForm";
 function ProjectManagement() {
-    const [projects, setprojects] = useState([]);
+    const [projects, setProjects] = useState([]);
     const [projectToEdit, setProjectToEdit] = useState(null);
     const [error, setError] = useState("");
 
@@ -16,7 +16,7 @@ function ProjectManagement() {
 
             }
             const data = await response.json();
-            setArticles(data);
+            setProjects(data);
             setError("")
         } catch (error) {
             setError(error.message)
@@ -43,7 +43,7 @@ function ProjectManagement() {
             if (!response.ok) {
                 throw new Error("حذف پروژه ناموفق")
             }
-            setArticles((previousProjects) =>
+            setProjects((previousProjects) =>
                 previousProjects.filter(
                     (project) => project._id !== id
                 )
@@ -69,9 +69,20 @@ function ProjectManagement() {
             {projects.map((project) => (
                 <div key={project._id}>
                     <h3>{project.title}</h3>
-                    <p>دسته بندی:{project.description}</p>
+                    {project.image && (
+                        <img
+                            src={`http://localhost:3000${project.image}`}
+                            alt={project.title}
+                            style={{
+                                width: "180px",
+                                height: "120px",
+                                objectFit: "cover"
+                            }}
+                        />
+                    )}
+                    <p>توضیحات:{project.description}</p>
                     <button onClick={() => handleDelete(project._id)}>حذف</button>
-                    <button onClick={() => setArticleToEdit(project)}>ویرایش</button>
+                    <button onClick={() => setProjectToEdit(project)}>ویرایش</button>
                 </div>
             ))}
         </div>
