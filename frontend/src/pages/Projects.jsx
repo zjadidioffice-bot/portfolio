@@ -36,6 +36,7 @@ function Projects() {
                     <ProjectCard
                     key={project._id}
                     title={project.title}
+                    image={project.image}
                     description={project.description}
                     link={project.demoUrl}
                     />

@@ -44,6 +44,21 @@ async function getArticles(req, res) {
     }
 }
 
+async function getAllArticlesForAdmin(req,res){
+    try {
+        const articles=await Article.find().sort({
+            createdAt:-1
+        });
+        res.status(200).json(articles);
+    } catch (error) {
+        console.log("get all articles error",error.message)
+
+        res.status(500).json({
+            message:"failed to get articles"
+        });
+    }
+}
+
 async function getArticlesById(req, res) {
     try {
         const article = await Article.findById(req.params.id);
@@ -112,5 +127,6 @@ module.exports = {
     getArticles,
     getArticlesById,
     updateArticle,
-    deleteArticle
+    deleteArticle,
+    getAllArticlesForAdmin
 }

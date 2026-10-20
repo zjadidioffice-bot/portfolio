@@ -5,7 +5,9 @@ function ArticleForm({ articleToEdit, onSave }) {
         title: articleToEdit?.title || "",
         category: articleToEdit?.category || "",
         content: articleToEdit?.content || "",
-        slug: articleToEdit?.slug || ""
+        slug: articleToEdit?.slug || "",
+        image: articleToEdit?.image || "",
+        published: articleToEdit?.published ?? false
     });
 
     useEffect(() => {
@@ -74,19 +76,19 @@ function ArticleForm({ articleToEdit, onSave }) {
                 },
                 body: JSON.stringify(formData),
             })
-       
+
             const data = await response.json();
             if (!response.ok) {
                 setErrorMessage("خطا" || data.message)
                 return;
             }
             setMessage(
-                articleToEdit?
-                "مقاله با موفقیت ویرایش شد":
-                "مقاله با موفقیت ذخیره شد...");
-                if(onSave){
-                    onSave()
-                }
+                articleToEdit ?
+                    "مقاله با موفقیت ویرایش شد" :
+                    "مقاله با موفقیت ذخیره شد...");
+            if (onSave) {
+                onSave()
+            }
             setFormData({
                 title: "",
                 category: "",
@@ -138,20 +140,34 @@ function ArticleForm({ articleToEdit, onSave }) {
                 onChange={handleChange}
             />
             <ImageUpload
-            value={formData.image}
-            onChange={(imageUrl)=>
-                setFormData((previousData)=>({
-                    ...previousData,
-                    image:imageUrl
-                }))
-            }
+                value={formData.image}
+                onChange={(imageUrl) =>
+                    setFormData((previousData) => ({
+                        ...previousData,
+                        image: imageUrl
+                    }))
+                }
+            />
+            <br />
+            <label>
+                انتشار مقاله:
+            </label>
+            <input
+                type="checkbox"
+                checked={formData.published}
+                onChange={(e) =>
+                    setFormData({
+                        ...formData,
+                        published: e.target.checked
+                    })
+                }
             />
             <button type="submit" disabled={isSubmitting}>{isSubmitting ? "در حال ذخیره ..." : "ذخیره مقاله"}</button>
-            <h3>نمایش اطلاعات:</h3>
+            {/* <h3>نمایش اطلاعات:</h3>
             <p>عنوان:{formData.title}</p>
             <p>دسته بندی:{formData.category}</p>
             <p>متن:{formData.content}</p>
-            <p>اسلاگ:{formData.slug}</p>
+            <p>اسلاگ:{formData.slug}</p> */}
 
         </form>
     );

@@ -1,6 +1,18 @@
-function ProjectCard({title,description,link}){
+function ProjectCard({title,description,link,image}){
     return(
         <article>
+            {image&&(
+                <img
+                src={`http://localhost:3000${image}`}
+                alt={title}
+                style={{
+                    width:"100%",
+                    maxWidth:"350px",
+                    height:"200px",
+                    objectFit:"cover"
+                }}
+                />
+            )}
             <h3>{title}</h3>
             <p>{description}</p>
             <a

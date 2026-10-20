@@ -5,7 +5,7 @@ function ArticleDetails() {
     const { id } = useParams();
     const [article, setArticle] = useState(null);
     const [loading, setLoading] = useState(true);
-const [error, setError] = useState("");
+    const [error, setError] = useState("");
     useEffect(() => {
         setLoading(true);
         setError("");
@@ -30,17 +30,24 @@ const [error, setError] = useState("");
     if (error) {
         return <p>{error}</p>
     }
-    if(!article){
-        return<p>{error}</p>
+    if (!article) {
+        return <p>{error}</p>
     }
-    return(
+    return (
         <article>
             <h1>{article.title}</h1>
+
             <p>دسته بندی:{article.category}</p>
-            {article.image&&(
+            {article.image && (
                 <img
-                src={`http://localhost:3000${article.image}`}
-                alt={article.title}
+                    src={`http://localhost:3000${article.image}`}
+                    alt={article.title}
+                    style={{
+                        width: "100%",
+                        maxWidth: "350px",
+                        height: "200px",
+                        objectFit: "cover"
+                    }}
                 />
             )}
             <p>{article.summary}</p>

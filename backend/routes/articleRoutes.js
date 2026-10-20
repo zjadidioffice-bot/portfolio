@@ -4,14 +4,15 @@ const{
     getArticles,
     getArticlesById,
     updateArticle,
-    deleteArticle
+    deleteArticle,
+    getAllArticlesForAdmin
 }=require("../controllers/articleController")
 
 const router=express.Router();
 
 router.post("/",createArticle);
 router.get("/",getArticles);
-
+router.get("/admin",getAllArticlesForAdmin)
 router.get("/:id",getArticlesById);
 router.put("/:id",updateArticle);
 router.delete("/:id",deleteArticle);

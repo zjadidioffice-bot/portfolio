@@ -9,7 +9,7 @@ function ArticlesManagement() {
     async function fetchArticles() {
         try {
             const response = await fetch(
-                "http://localhost:3000/api/articles"
+                "http://localhost:3000/api/articles/admin"
             );
             if (!response.ok) {
                 throw new Error("دریافت مقالات ناموفق بود....")
@@ -69,6 +69,20 @@ function ArticlesManagement() {
             {articles.map((article) => (
                 <div key={article._id}>
                     <h3>{article.title}</h3>
+                    {article.image && (
+                        <img
+                            src={`http://localhost:3000${article.image}`}
+                            alt={article.title}
+                            style={{
+                                width: "100%",
+                                maxWidth: "350px",
+                                height: "200px",
+                                objectFit: "cover"
+                            }}
+                        />
+                    )
+                    }
+
                     <p>دسته بندی:{article.category}</p>
                     <p>اسلاگ:{article.slug}</p>
                     <button onClick={() => handleDelete(article._id)}>حذف</button>

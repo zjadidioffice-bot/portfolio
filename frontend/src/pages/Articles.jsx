@@ -17,7 +17,7 @@ function Articles() {
         setLoading(true);
         setError("");
 
-        fetch(`http://localhost:3000/api/articles?${params.toString()}`)
+        fetch(`http://localhost:3000/api/articles/${params.toString()}`)
             .then((response) => {
                 if (!response.ok) {
                     throw new Error("دریافت مقالات ناموفق بود");
@@ -73,10 +73,20 @@ function Articles() {
                         <article
                             key={article._id}>
                             <h2>
-                                <Link to={`/article/${article._id}`}>
+                                <Link to={`/articles/${article._id}`}>
                                     {article.title}
                                 </Link>
                             </h2>
+                            <img
+                                src={`http://localhost:3000${article.image}`}
+                                alt={article.title}
+                                style={{
+                                    width: "100%",
+                                    maxWidth: "350px",
+                                    height: "200px",
+                                    objectFit: "cover"
+                                }}
+                            />
                             <p>{article.summary}</p>
                             <p>دسته بندی:{article.category}</p>
                         </article>)
