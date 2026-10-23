@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import ImageUpload from "../components/ImageUpload";
+import RichTextEditor from "../components/RichTextEditor";
 function ArticleForm({ articleToEdit, onSave }) {
     const [formData, setFormData] = useState({
         title: articleToEdit?.title || "",
@@ -159,12 +160,14 @@ function ArticleForm({ articleToEdit, onSave }) {
 
 
             <label htmlFor="content">متن مقاله</label>
-            <textarea
-                id="content"
-                name="content"
+            <RichTextEditor
                 value={formData.content}
-                onChange={handleChange}
-                rows={4}
+                onChange={(content)=>
+                    setFormData((previousData)=>({
+                        ...previousData,
+                        content,
+                    }))
+                }
             />
 
             <label>

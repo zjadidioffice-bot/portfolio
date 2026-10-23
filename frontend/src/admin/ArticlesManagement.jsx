@@ -6,6 +6,8 @@ function ArticlesManagement() {
     const [articleToEdit, setArticleToEdit] = useState(null)
     const [error, setError] = useState("");
     const [searchTerm, setSearchTerm] = useState("")
+    const [currentPage, setCurrentPage] = useState(1);
+    const articlesPerPage = 6;
     const filteredArticles = articles.filter((article) => {
         const search = searchTerm.trim().toLowerCase();
         return (
@@ -13,7 +15,16 @@ function ArticlesManagement() {
             article.slug?.toLowerCase().includes(search)
         )
     })
+    const totalPages = Math.ceil(
+        filteredArticles.length / articlesPerPage
+    );
 
+    const startIndex = (currentPage - 1) * articlesPerPage;
+
+    const paginatedArticles = filteredArticles.slice(
+        startIndex,
+        startIndex + articlesPerPage
+    );
 
     async function fetchArticles() {
         try {
@@ -80,7 +91,11 @@ function ArticlesManagement() {
                     type="search"
                     placeholder="جستجو بر اساس عنوان و یا اسلاگ"
                     value={searchTerm}
-                    onChange={(event) => setSearchTerm(event.target.value)}
+                    onChange={(event) => {
+                        setSearchTerm(event.target.value)
+                        setCurrentPage(1)
+                    }
+                    }
                 />
             </div>
 
@@ -94,7 +109,7 @@ function ArticlesManagement() {
 
             }
             <div className="admin-articles-grid">
-                {filteredArticles.map((article) => (
+                {paginatedArticles.map((article) => (
                     <div className="admin-article-card" key={article._id}>
                         <div className="admin-article-info">
                             <h3 >{article.title}</h3>
@@ -138,7 +153,27 @@ function ArticlesManagement() {
                     </div>
                 ))}
             </div>
+            {totalPages > 1 && (
+                <div className="pagination">
+                    <button
+                        onClick={() => setCurrentPage((page) => page - 1)}
+                        disabled={currentPage === 1}
+                    >
+                        قبلی
+                    </button>
 
+                    <span>
+                        صفحه {currentPage} از {totalPages}
+                    </span>
+
+                    <button
+                        onClick={() => setCurrentPage((page) => page + 1)}
+                        disabled={currentPage === totalPages}
+                    >
+                        بعدی
+                    </button>
+                </div>
+            )}
         </div >
     );
 }

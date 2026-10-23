@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-
+import DOMPurify from "dompurify"
 function ArticleDetails() {
     const { id } = useParams();
     const [article, setArticle] = useState(null);
@@ -59,9 +59,12 @@ function ArticleDetails() {
                 {article.summary && (
                     <p className="article-details-summary">{article.summary}</p>
                 )}
-                <div className="article-details-content">
-                    {article.content}
-                </div>
+<div
+    className="article-details-content"
+    dangerouslySetInnerHTML={{
+        __html: DOMPurify.sanitize(article.content || ""),
+    }}
+/>
             </article>
         </main>
 

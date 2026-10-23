@@ -8,7 +8,7 @@ async function createArticle(req, res) {
             article
         });
     } catch (error) {
-        console.log("create article error",error)
+        console.log("create article error", error)
         res.status(500).json({
             message: "fail to create article"
         })
@@ -17,25 +17,42 @@ async function createArticle(req, res) {
 
 async function getArticles(req, res) {
     try {
-        const {category,search}=req.query;
-        const filter={
-            published:true
+        const { category, search } = req.query;
+
+        const page = Math.max(parseInt(req.query.page, 10) || 1, 1);
+        const limit = Math.min(
+            Math.max(parseInt(req.query.limit, 10) || 6, 1),
+            50
+        );
+
+        const skip = (page - 1) * limit;
+        const filter = {
+            published: true
         };
-        if(category){
-            filter.category=category;
+        if (category) {
+            filter.category = category;
         }
-        if(search){
-            filter.$or=[
-                {title:{$regex:search,$options:"i"}},
-                {summary:{$regex:search,$options:"i"}},
-                {content:{$regex:search,$options:"i"}}
+        if (search) {
+            filter.$or = [
+                { title: { $regex: search, $options: "i" } },
+                { summary: { $regex: search, $options: "i" } },
+                { content: { $regex: search, $options: "i" } }
             ];
         }
+        const totalArticles = await Article.countDocuments(filter);
 
-        const articles=await Article.find(filter).sort({
-            createdAt:-1
+        const articles = await Article.find(filter)
+            .sort({ createdAt: -1 })
+            .skip(skip)
+            .limit(limit);
+
+        res.status(200).json({
+            articles,
+            currentPage: page,
+            totalPages: Math.ceil(totalArticles / limit),
+            totalArticles
         });
-        res.status(200).json(articles)
+
     } catch (error) {
         console.error("get articles error", error.message);
         res.status(500).json({
@@ -44,17 +61,17 @@ async function getArticles(req, res) {
     }
 }
 
-async function getAllArticlesForAdmin(req,res){
+async function getAllArticlesForAdmin(req, res) {
     try {
-        const articles=await Article.find().sort({
-            createdAt:-1
+        const articles = await Article.find().sort({
+            createdAt: -1
         });
         res.status(200).json(articles);
     } catch (error) {
-        console.log("get all articles error",error.message)
+        console.log("get all articles error", error.message)
 
         res.status(500).json({
-            message:"failed to get articles"
+            message: "failed to get articles"
         });
     }
 }

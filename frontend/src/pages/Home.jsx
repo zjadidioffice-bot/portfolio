@@ -33,7 +33,7 @@ function Home() {
                 return response.json();
             })
             .then((data) => {
-                setArticles(data);
+                setArticles(data.articles);
             })
             .catch((error) => {
                 setArticlesError(error.message)
@@ -84,7 +84,7 @@ function Home() {
                 <button onClick={() => setShowAll(!showAll)}>
                     {showAll ? "نمایش کمتر" : "مشاهده همه پروژه ها"}
                 </button>
-
+                <br />
                 {loading && <p>در حال دریافت پروژه ها</p>}
                 {error && <p>دریافت پروژه ها ناموفق بود...:{error}</p>}
                 {!loading && !error && visibleProjects.length === 0 && (
@@ -121,8 +121,11 @@ function Home() {
                 {articlesError && (
                     <p>دریافت مقالات ناموفق بود:{articlesError}</p>
                 )}
+                <a href="/articles">مشاهده تمام مقالات ... </a>
                 {!articlesLoading && !articlesError && (
+
                     <div className="articles-grid">
+
                         {featuredArticles.map((article) => (
                             <article className="article-card" key={article._id}>
                                 {article.image && (

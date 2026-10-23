@@ -6,8 +6,11 @@ function Articles() {
     const [error, setError] = useState("");
     const [search, setSearch] = useState("");
     const [category, setCategory] = useState("");
+    const [currentPage, setCurrentPage] = useState(1);
+    const [totalPages, setTotalPages] = useState(1);
     useEffect(() => {
         const params = new URLSearchParams();
+        params.set("page", currentPage);
         if (search.trim()) {
             params.set("search", search.trim())
         }
@@ -23,14 +26,18 @@ function Articles() {
                     throw new Error("دریافت مقالات ناموفق بود");
                 }
                 return response.json();
-            }).then((data) => setArticles(data))
+            }).then((data) => {
+                setArticles(data.articles)
+                setCurrentPage(data.currentPage)
+                    setTotalPages(data.totalPages)
+            })
             .catch((error) => {
                 setError(error.message);
             })
             .finally(() => {
                 setLoading(false);
             })
-    }, [search, category]);
+    }, [search, category, currentPage]);
 
     const categories = [
         ...new Set(articles.map((article) => article.category))
@@ -54,11 +61,20 @@ function Articles() {
                     type="text"
                     placeholder="جستجوی مقاله..."
                     value={search}
-                    onChange={(event) => setSearch(event.target.value)}
+                    onChange={(event) => {
+                        setSearch(event.target.value)
+                        setCurrentPage(1);
+
+                    }
+
+                    }
                 />
                 <select
                     value={category}
-                    onChange={(event) => setCategory(event.target.value)}
+                    onChange={(event) => {
+                        setCategory(event.target.value)
+                        setCurrentPage(1)
+                    }}
                 >
                     <option value="">  همه دسته بندی ها</option>
                     {categories.map((item) => (
@@ -97,18 +113,38 @@ function Articles() {
 
                                     <p>{article.summary}</p>
                                     <p>دسته بندی:{article.category}</p>
-                                <Link
-                                className="article-card-button"
-                                to={`/articles/${article._id}`}
-                                >
-                                    مشاهده مقاله
-                                </Link>
+                                    <Link
+                                        className="article-card-button"
+                                        to={`/articles/${article._id}`}
+                                    >
+                                        مشاهده مقاله
+                                    </Link>
                                 </article>)
                         }
                     </div>
                 )
             }
+            {!loading && !error && totalPages > 1 && (
+                <div className="pagination">
+                    <button
+                        onClick={() => setCurrentPage((page) => page - 1)}
+                        disabled={currentPage === 1}
+                    >
+                        قبلی
+                    </button>
 
+                    <span>
+                        صفحه {currentPage} از {totalPages}
+                    </span>
+
+                    <button
+                        onClick={() => setCurrentPage((page) => page + 1)}
+                        disabled={currentPage === totalPages}
+                    >
+                        بعدی
+                    </button>
+                </div>
+            )}
         </main>
     );
 }
