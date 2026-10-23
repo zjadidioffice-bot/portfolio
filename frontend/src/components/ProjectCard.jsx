@@ -1,25 +1,23 @@
-function ProjectCard({title,description,link,image}){
-    return(
-        <article>
-            {image&&(
+function ProjectCard({ title, description, demoUrl, image }) {
+    return (
+        <article className="project-card">
+            {image && (
                 <img
-                src={`http://localhost:3000${image}`}
-                alt={title}
-                style={{
-                    width:"100%",
-                    maxWidth:"350px",
-                    height:"200px",
-                    objectFit:"cover"
-                }}
+                    src={`http://localhost:3000${image}`}
+                    alt={title}
+
                 />
             )}
-            <h3>{title}</h3>
-            <p>{description}</p>
-            <a
-            href={link}
-            target="_blank"
-            rel="noopener noreferrer"
-            >view project</a>
+            <div className="project-card-content">
+                <h3>{title}</h3>
+                <p>{description}</p>
+                <a
+                    href={demoUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >مشاهده پروژه</a>
+            </div>
+
         </article>
     );
 }

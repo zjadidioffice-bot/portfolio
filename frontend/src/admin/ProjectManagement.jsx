@@ -1,6 +1,7 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import ProjectForm from "./ProjectForm";
 function ProjectManagement() {
+    const formRef = useRef(null);
     const [projects, setProjects] = useState([]);
     const [projectToEdit, setProjectToEdit] = useState(null);
     const [error, setError] = useState("");
@@ -57,34 +58,49 @@ function ProjectManagement() {
     return (
         <div>
             <h1>مدیریت پروژه ها</h1>
-            <ProjectForm
-                projectToEdit={projectToEdit}
-                onSave={handleSave}
-            />
+            <div ref={formRef}>
+                <ProjectForm
+                    projectToEdit={projectToEdit}
+                    onSave={handleSave}
+                />
+            </div>
+
 
             {error && <p>{error}</p>}
             {projects.length === 0 && !error && (
                 <p>پروژه ای برای نمایش وجود ندارد</p>
             )}
-            {projects.map((project) => (
-                <div key={project._id}>
-                    <h3>{project.title}</h3>
-                    {project.image && (
-                        <img
-                            src={`http://localhost:3000${project.image}`}
-                            alt={project.title}
-                            style={{
-                                width: "180px",
-                                height: "120px",
-                                objectFit: "cover"
+            <div className="admin-projects-grid">
+                {projects.map((project) => (
+                    <div className="admin-project-card" key={project._id}>
+                        <h3>{project.title}</h3>
+                        {project.image && (
+                            <img
+                                src={`http://localhost:3000${project.image}`}
+                                alt={project.title}
+                                style={{
+                                    width: "180px",
+                                    height: "120px",
+                                    objectFit: "cover"
+                                }}
+                            />
+                        )}
+                        <p>توضیحات:{project.description}</p>
+                        <div className="admin-project-actions">
+                            <button onClick={() => handleDelete(project._id)}>حذف</button>
+                            <button onClick={() => {
+                                setProjectToEdit(project)
+                                formRef.current?.scrollIntoView({
+                                    behavior:"smooth",
+                                    block:"start"
+                                })
                             }}
-                        />
-                    )}
-                    <p>توضیحات:{project.description}</p>
-                    <button onClick={() => handleDelete(project._id)}>حذف</button>
-                    <button onClick={() => setProjectToEdit(project)}>ویرایش</button>
-                </div>
-            ))}
+                                
+                                >ویرایش</button>
+                        </div>
+                    </div>
+                ))}
+            </div>
         </div>
     );
 }

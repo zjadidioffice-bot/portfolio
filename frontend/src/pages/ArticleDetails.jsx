@@ -34,27 +34,37 @@ function ArticleDetails() {
         return <p>{error}</p>
     }
     return (
-        <article>
-            <h1>{article.title}</h1>
+        <main className="article-details-page">
+            <article className="article-details">
+                <header className="article-details-header">
+                    <p className="article-details-category">
+                        {article.category}
+                    </p>
+                    <h1>{article.title}</h1>
+                    {article.createdAt && (
+                        <p className="article-details-date">
+                            {new Date(article.createdAt).toLocaleDateString("fa-IR")}
+                        </p>
+                    )}
+                </header>
 
-            <p>دسته بندی:{article.category}</p>
-            {article.image && (
-                <img
-                    src={`http://localhost:3000${article.image}`}
-                    alt={article.title}
-                    style={{
-                        width: "100%",
-                        maxWidth: "350px",
-                        height: "200px",
-                        objectFit: "cover"
-                    }}
-                />
-            )}
-            <p>{article.summary}</p>
-            <div>
-                {article.content}
-            </div>
-        </article>
+                {article.image && (
+                    <img
+                        className="article-details-image"
+                        src={`http://localhost:3000${article.image}`}
+                        alt={article.title}
+
+                    />
+                )}
+                {article.summary && (
+                    <p className="article-details-summary">{article.summary}</p>
+                )}
+                <div className="article-details-content">
+                    {article.content}
+                </div>
+            </article>
+        </main>
+
     )
 
 

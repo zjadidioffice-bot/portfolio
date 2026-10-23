@@ -15,7 +15,7 @@ function ProjectForm({ projectToEdit, onSave }) {
             description: projectToEdit?.description || "",
             image: projectToEdit?.image || "",
             demoUrl: projectToEdit?.demoUrl || "",
-            featured: projectToEdit?.featured || ""
+            featured: projectToEdit?.featured ?? false
 
         });
     }, [projectToEdit])
@@ -67,18 +67,30 @@ function ProjectForm({ projectToEdit, onSave }) {
         }
     }
     return (
-        <form onSubmit={handleSubmit}>
+        <form className="admin-project-form" onSubmit={handleSubmit}>
             <h2>
                 {projectToEdit ? "ساخت پروژه" : "ویرایش پروژه"}
             </h2>
-            <label htmlFor="title">عنوان پروژه</label>
-            <input
-                id="title"
-                name="title"
-                value={formData.title}
-                onChange={handleChange}
-            />
-            <br />
+            <div>
+                <div className="project-form-field">
+                    <label htmlFor="title">عنوان پروژه</label>
+                    <input
+                        id="title"
+                        name="title"
+                        value={formData.title}
+                        onChange={handleChange}
+                    />
+                </div>
+                <div className="project-form-field">
+                    <label htmlFor="demoUrl">لینک اجرا پروژه</label>
+                    <input
+                        id="demoUrl"
+                        name="demoUrl"
+                        value={formData.demoUrl}
+                        onChange={handleChange}
+                    />
+                </div>
+            </div>
             <label htmlFor="description">توضیحات پروژه</label>
             <input
                 id="description"
@@ -86,15 +98,8 @@ function ProjectForm({ projectToEdit, onSave }) {
                 value={formData.description}
                 onChange={handleChange}
             />
-            <br />
 
-            <label htmlFor="demoUrl">لینک اجرا پروژه</label>
-            <input
-                id="demoUrl"
-                name="demoUrl"
-                value={formData.demoUrl}
-                onChange={handleChange}
-            />
+
             <ImageUpload
                 value={formData.image}
                 onChange={(imageUrl) =>
@@ -104,22 +109,18 @@ function ProjectForm({ projectToEdit, onSave }) {
                     }))
                 }
             />
-            {/* <label htmlFor="title">آدرس تصویر</label>
-            <input
-                id="image"
-                name="image"
-                value={formData.image}
-                onChange={handleChange}
-            /> */}
-            <label htmlFor="title">پروژه ویژه است؟</label>
+
+            <label htmlFor="featured">پروژه ویژه است؟
             <input
                 type="checkbox"
                 name="featured"
-                value={formData.featured}
+                checked={formData.featured}
                 onChange={handleChange}
-            />
+            />                
+            </label>
+
             <button type="submit">
-                {projectToEdit ? "ثبت پروژه" : "ذخیره تغیرات"}
+                {projectToEdit ? "ذخیره تغیرات": "ثبت پروژه" }
             </button>
         </form>
     );

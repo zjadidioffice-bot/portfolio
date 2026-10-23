@@ -16,7 +16,7 @@ async function createProject(req, res) {
 }
 async function getProjects(req, res) {
     try {
-        const projects = await Project.find();
+        const projects = await Project.find().sort({createdAt:-1});
         res.status(200).json(projects);
     } catch (error) {
         console.error("get projects error", error.message);

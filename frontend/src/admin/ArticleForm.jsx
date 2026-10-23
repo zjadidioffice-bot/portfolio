@@ -15,7 +15,9 @@ function ArticleForm({ articleToEdit, onSave }) {
             title: articleToEdit?.title || "",
             category: articleToEdit?.category || "",
             content: articleToEdit?.content || "",
-            slug: articleToEdit?.slug || ""
+            slug: articleToEdit?.slug || "",
+            image: articleToEdit?.image || "",
+            published: articleToEdit?.published ?? false
         });
     }, [articleToEdit])
     const [isSubmitting, setIsSubmitting] = useState(false);
@@ -79,7 +81,7 @@ function ArticleForm({ articleToEdit, onSave }) {
 
             const data = await response.json();
             if (!response.ok) {
-                setErrorMessage("خطا" || data.message)
+                setErrorMessage(data.message || "ذخیره مقاله با خطا مواجه شد")
                 return;
             }
             setMessage(
@@ -93,7 +95,9 @@ function ArticleForm({ articleToEdit, onSave }) {
                 title: "",
                 category: "",
                 content: "",
-                slug: ""
+                slug: "",
+                image: "",
+                published: false
             })
         } catch (error) {
             console.error("خطای ذخیره مقاله", error)
@@ -106,53 +110,66 @@ function ArticleForm({ articleToEdit, onSave }) {
 
     }
     return (
-        <form onSubmit={handleSubmit}>
+        <form className="admin-article-form" onSubmit={handleSubmit}>
             <h1>ساخت مقاله</h1>
             {message && <p>{message}</p>}
             {errorMessage && <p>{errorMessage}</p>}
-            <label htmlFor="title">عنوان مقاله</label>
-            <input
-                id="title"
-                name="title"
-                value={formData.title}
-                onChange={handleChange}
-            />
+            <div className="article-form-row">
+                <div className="article-form-field">
+                    <label htmlFor="title">عنوان مقاله</label>
+                    <input
+                        id="title"
+                        name="title"
+                        value={formData.title}
+                        onChange={handleChange}
+                    />
+                </div>
+                <div className="article-form-field">
+                    <label htmlFor="slug"> اسلاگ:</label>
+                    <input
+                        id="slug"
+                        name="slug"
+                        value={formData.slug}
+                        onChange={handleChange}
+                    />
+                </div>
+            </div>
+            <div className="article-form-row">
+                <div className="article-form-field">
+                    <label htmlFor="category">دسته بندی:</label>
+                    <input
+                        id="category"
+                        name="category"
+                        value={formData.category}
+                        onChange={handleChange}
+                    />
+                </div>
+                <div className="article-form-field">
+                    <ImageUpload
+                        value={formData.image}
+                        onChange={(imageUrl) =>
+                            setFormData((previousData) => ({
+                                ...previousData,
+                                image: imageUrl
+                            }))
+                        }
+                    />
+                </div>
+            </div>
+
 
             <label htmlFor="content">متن مقاله</label>
-            <input
+            <textarea
                 id="content"
                 name="content"
                 value={formData.content}
                 onChange={handleChange}
+                rows={4}
             />
-            <label htmlFor="category">دسته بندی:</label>
-            <input
-                id="category"
-                name="category"
-                value={formData.category}
-                onChange={handleChange}
-            />
-            <label htmlFor="slug"> اسلاگ:</label>
-            <input
-                id="slug"
-                name="slug"
-                value={formData.slug}
-                onChange={handleChange}
-            />
-            <ImageUpload
-                value={formData.image}
-                onChange={(imageUrl) =>
-                    setFormData((previousData) => ({
-                        ...previousData,
-                        image: imageUrl
-                    }))
-                }
-            />
-            <br />
+
             <label>
-                انتشار مقاله:
-            </label>
-            <input
+                انتشار مقاله
+                            <input
                 type="checkbox"
                 checked={formData.published}
                 onChange={(e) =>
@@ -162,6 +179,8 @@ function ArticleForm({ articleToEdit, onSave }) {
                     })
                 }
             />
+            </label>
+
             <button type="submit" disabled={isSubmitting}>{isSubmitting ? "در حال ذخیره ..." : "ذخیره مقاله"}</button>
             {/* <h3>نمایش اطلاعات:</h3>
             <p>عنوان:{formData.title}</p>

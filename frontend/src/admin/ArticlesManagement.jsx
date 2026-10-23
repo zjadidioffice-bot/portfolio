@@ -1,9 +1,18 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import ArticleForm from "./ArticleForm";
 function ArticlesManagement() {
+    const formRef = useRef(null);
     const [articles, setArticles] = useState([])
     const [articleToEdit, setArticleToEdit] = useState(null)
     const [error, setError] = useState("");
+    const [searchTerm, setSearchTerm] = useState("")
+    const filteredArticles = articles.filter((article) => {
+        const search = searchTerm.trim().toLowerCase();
+        return (
+            article.title?.toLowerCase().includes(search) ||
+            article.slug?.toLowerCase().includes(search)
+        )
+    })
 
 
     async function fetchArticles() {
@@ -57,39 +66,80 @@ function ArticlesManagement() {
     return (
         <div>
             <h1>مدیریت مقالات</h1>
-            <ArticleForm
-                articleToEdit={articleToEdit}
-                onSave={handleSave}
-            />
+
+
+            <div ref={formRef}>
+                <ArticleForm
+                    articleToEdit={articleToEdit}
+                    onSave={handleSave}
+                />
+            </div>
+            <div className="admin-article-search">
+                <span>جستجوی مقالات</span>
+                <input
+                    type="search"
+                    placeholder="جستجو بر اساس عنوان و یا اسلاگ"
+                    value={searchTerm}
+                    onChange={(event) => setSearchTerm(event.target.value)}
+                />
+            </div>
 
             {error && <p>{error}</p>}
             {articles.length === 0 && !error && (
                 <p>مقاله ای برای نمایش وجود ندارد</p>
             )}
-            {articles.map((article) => (
-                <div key={article._id}>
-                    <h3>{article.title}</h3>
-                    {article.image && (
-                        <img
-                            src={`http://localhost:3000${article.image}`}
-                            alt={article.title}
-                            style={{
-                                width: "100%",
-                                maxWidth: "350px",
-                                height: "200px",
-                                objectFit: "cover"
-                            }}
-                        />
-                    )
-                    }
+            {articles.length > 0 && filteredArticles.length === 0 && (
+                <p>مقاله ای با این عبارت یافت نشد...</p>
+            )
 
-                    <p>دسته بندی:{article.category}</p>
-                    <p>اسلاگ:{article.slug}</p>
-                    <button onClick={() => handleDelete(article._id)}>حذف</button>
-                    <button onClick={() => setArticleToEdit(article)}>ویرایش</button>
-                </div>
-            ))}
-        </div>
+            }
+            <div className="admin-articles-grid">
+                {filteredArticles.map((article) => (
+                    <div className="admin-article-card" key={article._id}>
+                        <div className="admin-article-info">
+                            <h3 >{article.title}</h3>
+                            {article.image && (
+                                <img
+                                    src={`http://localhost:3000${article.image}`}
+                                    alt={article.title}
+                                    style={{
+                                        width: "100%",
+                                        maxWidth: "350px",
+                                        height: "200px",
+                                        objectFit: "cover"
+                                    }}
+                                />
+                            )
+                            }
+
+                            <p>دسته بندی:{article.category}</p>
+                            <p>اسلاگ:{article.slug}</p>
+                            <p>
+                                وضعیت:{article.published ? "منتشر شده" : "پیش نویس"}
+                            </p>
+
+
+                        </div>
+                        <div className="admin-article-actions">
+                            <button onClick={() => handleDelete(article._id)}>حذف</button>
+                            <button
+                                onClick={() => {
+                                    setArticleToEdit(article);
+                                    formRef.current?.scrollIntoView({
+                                        behavior: "smooth",
+                                        block: "start"
+                                    });
+                                }}>
+
+
+                                ویرایش
+                            </button>
+                        </div>
+                    </div>
+                ))}
+            </div>
+
+        </div >
     );
 }
 

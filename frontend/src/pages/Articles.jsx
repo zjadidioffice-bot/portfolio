@@ -17,7 +17,7 @@ function Articles() {
         setLoading(true);
         setError("");
 
-        fetch(`http://localhost:3000/api/articles/${params.toString()}`)
+        fetch(`http://localhost:3000/api/articles?${params.toString()}`)
             .then((response) => {
                 if (!response.ok) {
                     throw new Error("دریافت مقالات ناموفق بود");
@@ -44,24 +44,30 @@ function Articles() {
     // }
     console.log("Articles rendered");
     return (
-        <main>
-            <h1>Articles</h1>
-            <input
-                type="text"
-                placeholder="جستجوی مقاله..."
-                value={search}
-                onChange={(event) => setSearch(event.target.value)}
-            />
-            <select
-                value={category}
-                onChange={(event) => setCategory(event.target.value)}
-            >
-                <option value="">  همه دسته بندی ها</option>
-                {categories.map((item) => (
-                    <option key={item} value={item}>{item}</option>
-                ))
-                }
-            </select>
+        <main className="articles-page">
+            <header className="articles-header">
+                <h1>مقالات</h1>
+                <p>مطالب ، تجربه ها و آموزش های من در حوزه برنامه نویسی</p>
+            </header>
+            <div className="articles-filters">
+                <input
+                    type="text"
+                    placeholder="جستجوی مقاله..."
+                    value={search}
+                    onChange={(event) => setSearch(event.target.value)}
+                />
+                <select
+                    value={category}
+                    onChange={(event) => setCategory(event.target.value)}
+                >
+                    <option value="">  همه دسته بندی ها</option>
+                    {categories.map((item) => (
+                        <option key={item} value={item}>{item}</option>
+                    ))
+                    }
+                </select>
+            </div>
+
 
             {loading ? (
                 <p>در حال دریافت مقالات...</p>
@@ -69,27 +75,37 @@ function Articles() {
                 articles.length === 0 ? (
                     <p>هنوز مقاله ای منتشر نشده است...</p>
                 ) : (
-                    articles.map((article) =>
-                        <article
-                            key={article._id}>
-                            <h2>
-                                <Link to={`/articles/${article._id}`}>
-                                    {article.title}
+                    <div className="articles-grid">
+                        {
+                            articles.map((article) =>
+                                <article className="article-card"
+                                    key={article._id}>
+                                    <h2>
+                                        <Link
+                                            className="article-card-title"
+                                            to={`/articles/${article._id}`}>
+                                            {article.title}
+                                        </Link>
+                                    </h2>
+                                    {article.image && (
+                                        <img
+                                            src={`http://localhost:3000${article.image}`}
+                                            alt={article.title}
+                                            className="article-card-image"
+                                        />
+                                    )}
+
+                                    <p>{article.summary}</p>
+                                    <p>دسته بندی:{article.category}</p>
+                                <Link
+                                className="article-card-button"
+                                to={`/articles/${article._id}`}
+                                >
+                                    مشاهده مقاله
                                 </Link>
-                            </h2>
-                            <img
-                                src={`http://localhost:3000${article.image}`}
-                                alt={article.title}
-                                style={{
-                                    width: "100%",
-                                    maxWidth: "350px",
-                                    height: "200px",
-                                    objectFit: "cover"
-                                }}
-                            />
-                            <p>{article.summary}</p>
-                            <p>دسته بندی:{article.category}</p>
-                        </article>)
+                                </article>)
+                        }
+                    </div>
                 )
             }
 

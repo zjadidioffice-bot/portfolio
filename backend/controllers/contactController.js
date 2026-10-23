@@ -24,5 +24,15 @@ async function createContact(req,res) {
         });
     }
 }
-
-module.exports={createContact}
+async function getContacts(req,res) {
+    try {
+        const contacts=await Contact.find().sort({createdAt:-1});
+        res.status(200).json(contacts)
+    } catch (error) {
+        console.log("get contacts error",error.message)
+        res.status(500).json({
+            message:"failed to get contact message"
+        })
+    }
+}
+module.exports={createContact,getContacts}

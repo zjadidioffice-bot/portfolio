@@ -42,8 +42,8 @@ POST http://localhost:3000/api/projects
 Content-Type: application/json
 
 {
-    "title":"my 2 project",
-    "description":"my 2 project"
+    "title":"my 3 project",
+    "description":"my 3 project"
 }
 ### 3. دریافت یک پروژه
 GET http://localhost:3000/api/projects/6acb0d4d1c612cc2cd92a449
@@ -74,18 +74,3 @@ GET http://localhost:3000/api/articles?category=web&search=art
 
 
 curl.exe -X POST "http://localhost:3000/api/uploads" -F "image=@D:\Images\sample.png"
-
-
-### Create article with image
-POST http://localhost:3000/api/articles
-Content-Type: application/json
-
-{
-    "title": "Article with Image",
-    "slug": "article-with-image",
-    "summary": "Testing article image",
-    "content": "This is a test article with an uploaded image.",
-    "category": "Programming",
-    "image": "/uploads/1791703342666-569058167.png",
-    "published": false
-}

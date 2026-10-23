@@ -9,6 +9,7 @@ import MainLayout from './layouts/MainLayout'
 import ArticleDetails from './pages/ArticleDetails'
 import ArticlesManagement from './admin/ArticlesManagement'
 import ProjectManagement from './admin/ProjectManagement'
+import MessagesManagement from './admin/MessagesManagement'
 function App() {
 
   return (
@@ -77,6 +78,10 @@ function App() {
         <Route
           path="/admin/projects"
           element={<ProjectManagement />}
+        />
+        <Route
+        path="/admin/messages"
+        element={<MessagesManagement/>}
         />
       </Routes>
 

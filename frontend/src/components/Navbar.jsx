@@ -1,14 +1,14 @@
 import {Link}from "react-router-dom"
 function Navbar(){
     return(
-        <nav>
-            <h2>zahrajadidi</h2>
-            <div>
-                <Link to="/">Home</Link>
-                <Link to="/about">About</Link>
-                <Link to="/projects">Projects</Link>
-                <Link to="/articles">Articles</Link>
-                <Link to="/contact">Contact</Link>
+        <nav className="navbar">
+            <h2>زهرا جدیدی</h2>
+            <div className="navbar-links">
+                <Link to="/">خانه</Link>
+                <Link to="/about">درباره من</Link>
+                <Link to="/projects">پروژه ها</Link>
+                <Link to="/articles">مقالات</Link>
+                <Link to="/contact">تماس با من</Link>
             </div>
         </nav>
     );
