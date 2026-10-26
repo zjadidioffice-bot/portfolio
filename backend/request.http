@@ -82,3 +82,13 @@ GET http://localhost:3000/api/articles?page=1&limit=6
 
 ### صفحه دوم مقالات
 GET http://localhost:3000/api/articles?page=2&limit=6
+
+
+### Admin login
+POST http://localhost:3000/api/auth/login
+Content-Type: application/json
+
+{
+  "email": "zjadidioffice@gmail.com",
+  "password": "$2b$12$LVWDsTjQUVJesZrbO7PTROXImuG85z9Kp85FGRBW1Rls5NZQ8HQ4S"
+}
