@@ -1,5 +1,27 @@
 const Article = require("../models/Article")
 
+async function getArticleBySlug(req, res) {
+    try {
+        const article = await Article.findOne({
+            slug: req.params.slug
+        });
+
+        if (!article) {
+            return res.status(404).json({
+                message: "مقاله پیدا نشد"
+            });
+        }
+
+        res.status(200).json(article);
+    } catch (error) {
+        console.error("get article by slug error:", error.message);
+
+        return res.status(500).json({
+            message: "دریافت مقاله با خطای سرور مواجه شد"
+        });
+    }
+}
+
 async function createArticle(req, res) {
     try {
         const article = await Article.create(req.body);
@@ -9,9 +31,25 @@ async function createArticle(req, res) {
         });
     } catch (error) {
         console.log("create article error", error)
-        res.status(500).json({
-            message: "fail to create article"
-        })
+
+        // اسلاگ تکراری
+        if (error.code === 11000) {
+            return res.status(409).json({
+                message: "این اسلاگ قبلاً ثبت شده است. یک اسلاگ متفاوت وارد کن."
+            });
+        }
+
+        // خطای اعتبارسنجی مدل
+        if (error.name === "ValidationError") {
+            return res.status(400).json({
+                message: "اطلاعات مقاله معتبر نیست. عنوان، دسته‌بندی، متن و اسلاگ را بررسی کن."
+            });
+        }
+
+        // سایر خطاهای پیش‌بینی‌نشده
+        return res.status(500).json({
+            message: "ذخیره مقاله با خطای سرور مواجه شد."
+        });
     }
 }
 
@@ -114,9 +152,22 @@ async function updateArticle(req, res) {
         });
     } catch (error) {
         console.error("update article error", error.message);
-        res.status(500).json({
-            message: "failed to update article"
-        })
+
+        if (error.code === 11000) {
+            return res.status(409).json({
+                message: "این اسلاگ قبلاً برای مقاله دیگری ثبت شده است."
+            });
+        }
+
+        if (error.name === "ValidationError") {
+            return res.status(400).json({
+                message: "اطلاعات مقاله معتبر نیست. فیلدها را بررسی کن."
+            });
+        }
+
+        return res.status(500).json({
+            message: "ویرایش مقاله با خطای سرور مواجه شد."
+        });
     }
 }
 
@@ -145,5 +196,6 @@ module.exports = {
     getArticlesById,
     updateArticle,
     deleteArticle,
-    getAllArticlesForAdmin
+    getAllArticlesForAdmin,
+    getArticleBySlug
 }

@@ -2,7 +2,8 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import DOMPurify from "dompurify"
 function ArticleDetails() {
-    const { id } = useParams();
+   // const { id } = useParams();
+    const { slug } = useParams();
     const [article, setArticle] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState("");
@@ -10,7 +11,7 @@ function ArticleDetails() {
         setLoading(true);
         setError("");
 
-        fetch(`http://localhost:3000/api/articles/${id}`)
+        fetch(`http://localhost:3000/api/articles/slug/${encodeURIComponent(slug)}`)
             .then((response) => {
                 if (!response.ok) {
                     throw new Error("دریافت مقالات ناموفق بود");
@@ -23,7 +24,7 @@ function ArticleDetails() {
             .finally(() => {
                 setLoading(false);
             })
-    }, [id]);
+    }, [slug]);
     if (loading) {
         return <p>در حال دریافت مقالات....</p>
     }

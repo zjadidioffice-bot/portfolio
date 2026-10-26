@@ -53,7 +53,7 @@ function App() {
         >
         </Route>
         <Route
-          path='/articles/:id' element=
+          path='/articles/:slug' element=
           {
             <MainLayout>
               <ArticleDetails />

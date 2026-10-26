@@ -99,7 +99,7 @@ function Articles() {
                                     <h2>
                                         <Link
                                             className="article-card-title"
-                                            to={`/articles/${article._id}`}>
+                                            to={`/articles/${encodeURIComponent(article.slug)}`}>
                                             {article.title}
                                         </Link>
                                     </h2>
@@ -115,7 +115,7 @@ function Articles() {
                                     <p>دسته بندی:{article.category}</p>
                                     <Link
                                         className="article-card-button"
-                                        to={`/articles/${article._id}`}
+                                        to={`/articles/${encodeURIComponent(article.slug)}`}
                                     >
                                         مشاهده مقاله
                                     </Link>

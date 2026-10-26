@@ -137,7 +137,7 @@ function Home() {
                                 <p>{article.category}</p>
                                 <h3>{article.title}</h3>
                                 <p>{article.summary}</p>
-                                <Link to={`/articles/${article._id}`}>
+                                <Link to={`/articles/${encodeURIComponent(article.slug)}`}>
                                     مطالعه  مقاله
                                 </Link>
                             </article>
