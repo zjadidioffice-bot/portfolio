@@ -6,6 +6,8 @@ const contactRoutes=require("./routes/contactRoutes")
 const articleRoutes=require("./routes/articleRoutes");
 const projectRoutes=require("./routes/projectRoutes");
 const uploadRoutes=require("./routes/uploadRoutes")
+const authRoutes=require("./routes/authRoutes")
+
 dotenv.config();
 const app=express();
 app.use("/uploads",express.static("uploads"));
@@ -17,6 +19,7 @@ app.use(cors({
 }))
 
 app.use(express.json());
+app.use("/api/auth",authRoutes)
 app.use("/api/contact",contactRoutes);
 app.use("/api/articles",articleRoutes);
 app.use("/api/projects",projectRoutes)

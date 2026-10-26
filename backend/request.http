@@ -90,5 +90,5 @@ Content-Type: application/json
 
 {
   "email": "zjadidioffice@gmail.com",
-  "password": "$2b$12$LVWDsTjQUVJesZrbO7PTROXImuG85z9Kp85FGRBW1Rls5NZQ8HQ4S"
+  "password": "123456"
 }

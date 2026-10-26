@@ -10,6 +10,7 @@ import ArticleDetails from './pages/ArticleDetails'
 import ArticlesManagement from './admin/ArticlesManagement'
 import ProjectManagement from './admin/ProjectManagement'
 import MessagesManagement from './admin/MessagesManagement'
+import AdminLogin from './admin/AdminLogin'
 function App() {
 
   return (
@@ -72,6 +73,10 @@ function App() {
         </Route>
         {/* صفحات مدیریت */}
         <Route
+          path="/admin/login"
+          element={<AdminLogin />}
+        />
+        <Route
           path="/admin/articles"
           element={<ArticlesManagement />}
         />
@@ -80,8 +85,8 @@ function App() {
           element={<ProjectManagement />}
         />
         <Route
-        path="/admin/messages"
-        element={<MessagesManagement/>}
+          path="/admin/messages"
+          element={<MessagesManagement />}
         />
       </Routes>
 
