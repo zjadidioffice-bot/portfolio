@@ -11,6 +11,7 @@ import ArticlesManagement from './admin/ArticlesManagement'
 import ProjectManagement from './admin/ProjectManagement'
 import MessagesManagement from './admin/MessagesManagement'
 import AdminLogin from './admin/AdminLogin'
+import AdminRoute from './admin/AdminRoute'
 function App() {
 
   return (
@@ -78,15 +79,27 @@ function App() {
         />
         <Route
           path="/admin/articles"
-          element={<ArticlesManagement />}
+          element={
+            <AdminRoute>
+              <ArticlesManagement />
+            </AdminRoute>
+          }
         />
         <Route
           path="/admin/projects"
-          element={<ProjectManagement />}
+          element={
+            <AdminRoute>
+              <ProjectManagement />
+            </AdminRoute>
+          }
         />
         <Route
           path="/admin/messages"
-          element={<MessagesManagement />}
+          element={
+            <AdminRoute>
+              <MessagesManagement />
+            </AdminRoute>
+          }
         />
       </Routes>
 

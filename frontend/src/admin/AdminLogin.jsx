@@ -28,6 +28,7 @@ function AdminLogin() {
 
             if (!response.ok) {
                 throw new Error(data.message || "ورود ناموفق بود.");
+                { error && <p role="alert">{error}</p> }
             }
 
             if (!data.token) {
