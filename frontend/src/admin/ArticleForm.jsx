@@ -10,6 +10,7 @@ function ArticleForm({ articleToEdit, onSave }) {
         image: articleToEdit?.image || "",
         published: articleToEdit?.published ?? false
     });
+    const token = sessionStorage.getItem("adminToken");
 
     useEffect(() => {
         setFormData({
@@ -34,166 +35,167 @@ function ArticleForm({ articleToEdit, onSave }) {
             .replace(/^-|-$/g, "");
     }
 
-function handleChange(event) {
-    const { name, value } = event.target;
+    function handleChange(event) {
+        const { name, value } = event.target;
 
-    setFormData((previousData) => {
-        const updatedData = {
-            ...previousData,
-            [name]: value,
-        };
+        setFormData((previousData) => {
+            const updatedData = {
+                ...previousData,
+                [name]: value,
+            };
 
-        if (name === "title") {
-            updatedData.slug = createSlug(value);
-        }
+            if (name === "title") {
+                updatedData.slug = createSlug(value);
+            }
 
-        return updatedData;
-    });
-}
-
-
-async function handleSubmit(event) {
-    event.preventDefault();
-
-    if (
-        !formData.title.trim() ||
-        !formData.category.trim() ||
-        !formData.content.trim()
-    ) {
-        setErrorMessage("عنوان ، دسته بندی و متن مقاله را وارد کن")
-        setMessage("")
-        return;
+            return updatedData;
+        });
     }
-    setErrorMessage("")
-    setMessage("")
-    setIsSubmitting(true)
 
-    try {
-        const url = articleToEdit
-            ?
-            `http://localhost:3000/api/articles/${articleToEdit._id}`
-            : "http://localhost:3000/api/articles";
-        const response = await fetch(url, {
-            method: articleToEdit ? "PUT" : "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify(formData),
-        })
 
-        const data = await response.json();
-        if (!response.ok) {
-            setErrorMessage(data.message || "ذخیره مقاله با خطا مواجه شد")
+    async function handleSubmit(event) {
+        event.preventDefault();
+
+        if (
+            !formData.title.trim() ||
+            !formData.category.trim() ||
+            !formData.content.trim()
+        ) {
+            setErrorMessage("عنوان ، دسته بندی و متن مقاله را وارد کن")
+            setMessage("")
             return;
         }
-        setMessage(
-            articleToEdit ?
-                "مقاله با موفقیت ویرایش شد" :
-                "مقاله با موفقیت ذخیره شد...");
-        if (onSave) {
-            onSave()
-        }
-        setFormData({
-            title: "",
-            category: "",
-            content: "",
-            slug: "",
-            image: "",
-            published: false
-        })
-    } catch (error) {
-        console.error("خطای ذخیره مقاله", error)
-        setErrorMessage("ارتباط با سرور برقرار نشد")
-    }
-    finally {
-        setIsSubmitting(false)
-    }
+        setErrorMessage("")
+        setMessage("")
+        setIsSubmitting(true)
 
+        try {
+            const url = articleToEdit
+                ?
+                `http://localhost:3000/api/articles/${articleToEdit._id}`
+                : "http://localhost:3000/api/articles";
+            const response = await fetch(url, {
+                method: articleToEdit ? "PUT" : "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${token}`
+                },
+                body: JSON.stringify(formData),
+            })
 
-}
-return (
-    <form className="admin-article-form" onSubmit={handleSubmit}>
-        <h1>ساخت مقاله</h1>
-        {message && <p>{message}</p>}
-        {errorMessage && <p>{errorMessage}</p>}
-        <div className="article-form-row">
-            <div className="article-form-field">
-                <label htmlFor="title">عنوان مقاله</label>
-                <input
-                    id="title"
-                    name="title"
-                    value={formData.title}
-                    onChange={handleChange}
-                />
-            </div>
-            <div className="article-form-field">
-                <label htmlFor="slug"> اسلاگ:</label>
-                <input
-                    id="slug"
-                    name="slug"
-                    value={formData.slug}
-                    onChange={handleChange}
-                />
-            </div>
-        </div>
-        <div className="article-form-row">
-            <div className="article-form-field">
-                <label htmlFor="category">دسته بندی:</label>
-                <input
-                    id="category"
-                    name="category"
-                    value={formData.category}
-                    onChange={handleChange}
-                />
-            </div>
-            <div className="article-form-field">
-                <ImageUpload
-                    value={formData.image}
-                    onChange={(imageUrl) =>
-                        setFormData((previousData) => ({
-                            ...previousData,
-                            image: imageUrl
-                        }))
-                    }
-                />
-            </div>
-        </div>
-
-
-        <label htmlFor="content">متن مقاله</label>
-        <RichTextEditor
-            value={formData.content}
-            onChange={(content) =>
-                setFormData((previousData) => ({
-                    ...previousData,
-                    content,
-                }))
+            const data = await response.json();
+            if (!response.ok) {
+                setErrorMessage(data.message || "ذخیره مقاله با خطا مواجه شد")
+                return;
             }
-        />
+            setMessage(
+                articleToEdit ?
+                    "مقاله با موفقیت ویرایش شد" :
+                    "مقاله با موفقیت ذخیره شد...");
+            if (onSave) {
+                onSave()
+            }
+            setFormData({
+                title: "",
+                category: "",
+                content: "",
+                slug: "",
+                image: "",
+                published: false
+            })
+        } catch (error) {
+            console.error("خطای ذخیره مقاله", error)
+            setErrorMessage("ارتباط با سرور برقرار نشد")
+        }
+        finally {
+            setIsSubmitting(false)
+        }
 
-        <label>
-            انتشار مقاله
-            <input
-                type="checkbox"
-                checked={formData.published}
-                onChange={(e) =>
-                    setFormData({
-                        ...formData,
-                        published: e.target.checked
-                    })
+
+    }
+    return (
+        <form className="admin-article-form" onSubmit={handleSubmit}>
+            <h1>ساخت مقاله</h1>
+            {message && <p>{message}</p>}
+            {errorMessage && <p>{errorMessage}</p>}
+            <div className="article-form-row">
+                <div className="article-form-field">
+                    <label htmlFor="title">عنوان مقاله</label>
+                    <input
+                        id="title"
+                        name="title"
+                        value={formData.title}
+                        onChange={handleChange}
+                    />
+                </div>
+                <div className="article-form-field">
+                    <label htmlFor="slug"> اسلاگ:</label>
+                    <input
+                        id="slug"
+                        name="slug"
+                        value={formData.slug}
+                        onChange={handleChange}
+                    />
+                </div>
+            </div>
+            <div className="article-form-row">
+                <div className="article-form-field">
+                    <label htmlFor="category">دسته بندی:</label>
+                    <input
+                        id="category"
+                        name="category"
+                        value={formData.category}
+                        onChange={handleChange}
+                    />
+                </div>
+                <div className="article-form-field">
+                    <ImageUpload
+                        value={formData.image}
+                        onChange={(imageUrl) =>
+                            setFormData((previousData) => ({
+                                ...previousData,
+                                image: imageUrl
+                            }))
+                        }
+                    />
+                </div>
+            </div>
+
+
+            <label htmlFor="content">متن مقاله</label>
+            <RichTextEditor
+                value={formData.content}
+                onChange={(content) =>
+                    setFormData((previousData) => ({
+                        ...previousData,
+                        content,
+                    }))
                 }
             />
-        </label>
 
-        <button type="submit" disabled={isSubmitting}>{isSubmitting ? "در حال ذخیره ..." : "ذخیره مقاله"}</button>
-        {/* <h3>نمایش اطلاعات:</h3>
+            <label>
+                انتشار مقاله
+                <input
+                    type="checkbox"
+                    checked={formData.published}
+                    onChange={(e) =>
+                        setFormData({
+                            ...formData,
+                            published: e.target.checked
+                        })
+                    }
+                />
+            </label>
+
+            <button type="submit" disabled={isSubmitting}>{isSubmitting ? "در حال ذخیره ..." : "ذخیره مقاله"}</button>
+            {/* <h3>نمایش اطلاعات:</h3>
             <p>عنوان:{formData.title}</p>
             <p>دسته بندی:{formData.category}</p>
             <p>متن:{formData.content}</p>
             <p>اسلاگ:{formData.slug}</p> */}
 
-    </form>
-);
+        </form>
+    );
 }
 
 export default ArticleForm;

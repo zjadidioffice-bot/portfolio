@@ -1,8 +1,9 @@
 const express=require("express")
-const{ createContact,getContacts }=require("../controllers/contactController");
-
+const{ createContact,getContacts,saveReply }=require("../controllers/contactController");
+const protectAdmin=require("../middleware/authMiddleware")
 const router=express.Router();
-router.get("/",getContacts)
+router.get("/",protectAdmin,getContacts)
+router.patch("/:id/reply", protectAdmin, saveReply);
 router.post("/",createContact)
 
 module.exports=router;

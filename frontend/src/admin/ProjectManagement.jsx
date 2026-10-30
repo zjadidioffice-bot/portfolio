@@ -5,6 +5,7 @@ function ProjectManagement() {
     const [projects, setProjects] = useState([]);
     const [projectToEdit, setProjectToEdit] = useState(null);
     const [error, setError] = useState("");
+    const token = sessionStorage.getItem("adminToken");
 
 
     async function fetchProjects() {
@@ -38,7 +39,10 @@ function ProjectManagement() {
             const response = await fetch(
                 `http://localhost:3000/api/projects/${id}`,
                 {
-                    method: "DELETE"
+                    method: "DELETE",
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    }
                 }
             );
             if (!response.ok) {
@@ -91,12 +95,12 @@ function ProjectManagement() {
                             <button onClick={() => {
                                 setProjectToEdit(project)
                                 formRef.current?.scrollIntoView({
-                                    behavior:"smooth",
-                                    block:"start"
+                                    behavior: "smooth",
+                                    block: "start"
                                 })
                             }}
-                                
-                                >ویرایش</button>
+
+                            >ویرایش</button>
                         </div>
                     </div>
                 ))}

@@ -50,31 +50,48 @@ function Home() {
 
     return (
         <>
-            <section className="hero">
-                <div className="hero-content">
-                    <p className="hero-greeting">
-                        سلام من زهرا جدیدی هستم
-                    </p>
-                    <h1>
-                        توسعه دهنده نرم افزار
-                        <br />
-                        و علاقه مند به هوش مصنوعی
-                    </h1>
-                    <p className="hero-description">
-                        در زمینه توسعه نرم افزار فعالیت میکنم
-                        و به ساخت برنامه های کاربردی
-                        و یادگیری فناوری های هوش مصنوعی علاقه مند هستم
-                    </p>
-                    <div className="hero-actions">
-                        <a href="/projects" className="hero-button primary">
-                            مشاهده پروژه ها
-                        </a>
-                        <a href="/contact" className="hero-button primary">
-                            تماس با من
-                        </a>
-                    </div>
-                </div>
-            </section>
+<section className="hero">
+    <div className="hero-layout">
+
+        {/* عکس در سمت راست */}
+        <div className="hero-image">
+            <img
+                src="/images/zahrajadidi.jpg"
+                alt="Zahra Jadidi"
+            />
+        </div>
+
+        {/* متن‌ها در سمت چپ */}
+        <div className="hero-content">
+            <p className="hero-greeting">
+                سلام من زهرا جدیدی هستم
+            </p>
+
+            <h1>
+                توسعه دهنده نرم افزار
+                <br />
+                و علاقه مند به هوش مصنوعی
+            </h1>
+
+            <p className="hero-description">
+                در زمینه توسعه نرم افزار فعالیت میکنم
+                و به ساخت برنامه های کاربردی
+                و یادگیری فناوری های هوش مصنوعی علاقه مند هستم
+            </p>
+
+            <div className="hero-actions">
+                <a href="/projects" className="hero-button primary">
+                    مشاهده پروژه ها
+                </a>
+
+                <a href="/contact" className="hero-button primary">
+                    تماس با من
+                </a>
+            </div>
+        </div>
+
+    </div>
+</section>
             <section className="home-projects">
                 <div className="section-heading">
                     <p>نمونه کارهای من</p>

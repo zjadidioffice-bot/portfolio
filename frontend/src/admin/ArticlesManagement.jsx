@@ -8,6 +8,7 @@ function ArticlesManagement() {
     const [searchTerm, setSearchTerm] = useState("")
     const [currentPage, setCurrentPage] = useState(1);
     const articlesPerPage = 6;
+    const token=sessionStorage.getItem("adminToken")
     const filteredArticles = articles.filter((article) => {
         const search = searchTerm.trim().toLowerCase();
         return (
@@ -29,7 +30,12 @@ function ArticlesManagement() {
     async function fetchArticles() {
         try {
             const response = await fetch(
-                "http://localhost:3000/api/articles/admin"
+                "http://localhost:3000/api/articles/admin",
+                {
+                    headers:{
+                        Authorization:`Bearer ${token}`
+                    }
+                }
             );
             if (!response.ok) {
                 throw new Error("دریافت مقالات ناموفق بود....")
@@ -57,7 +63,10 @@ function ArticlesManagement() {
             const response = await fetch(
                 `http://localhost:3000/api/articles/${id}`,
                 {
-                    method: "DELETE"
+                    method: "DELETE",
+                    headers:{
+                        Authorization:`Bearer ${token}`
+                    }
                 }
             );
             if (!response.ok) {

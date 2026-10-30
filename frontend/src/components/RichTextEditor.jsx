@@ -4,6 +4,7 @@ import Quill from "quill";
 import "quill/dist/quill.snow.css";
 
 function RichTextEditor({ value, onChange }) {
+    const token = sessionStorage.getItem("adminToken");
     const editorRef = useRef(null);
     const quillRef = useRef(null);
     const onChangeRef = useRef(onChange);
@@ -27,74 +28,77 @@ function RichTextEditor({ value, onChange }) {
             theme: "snow",
             placeholder: "متن مقاله را اینجا بنویس...",
 
-modules: {
-    toolbar: {
-        container: [
-            [{ header: [1, 2, 3, false] }],
-            ["bold", "italic", "underline", "strike"],
-            [
-                { color: [] },
-                { background: [] },
-            ],
-            [{ list: "ordered" }, { list: "bullet" }],
-            ["link", "image", "blockquote"],
-            [{ align: [] }],
-            ["clean"],
-        ],
-        handlers: {
-            image: function () {
-                const quill = this.quill;
+            modules: {
+                toolbar: {
+                    container: [
+                        [{ header: [1, 2, 3, false] }],
+                        ["bold", "italic", "underline", "strike"],
+                        [
+                            { color: [] },
+                            { background: [] },
+                        ],
+                        [{ list: "ordered" }, { list: "bullet" }],
+                        ["link", "image", "blockquote"],
+                        [{ align: [] }],
+                        ["clean"],
+                    ],
+                    handlers: {
+                        image: function () {
+                            const quill = this.quill;
 
-                const input = document.createElement("input");
-                input.type = "file";
-                input.accept = "image/jpeg,image/png,image/webp";
+                            const input = document.createElement("input");
+                            input.type = "file";
+                            input.accept = "image/jpeg,image/png,image/webp";
 
-                input.click();
+                            input.click();
 
-                input.onchange = async () => {
-                    const file = input.files?.[0];
+                            input.onchange = async () => {
+                                const file = input.files?.[0];
 
-                    if (!file) return;
+                                if (!file) return;
 
-                    const formData = new FormData();
-                    formData.append("image", file);
+                                const formData = new FormData();
+                                formData.append("image", file);
 
-                    try {
-                        const response = await fetch(
-                            "http://localhost:3000/api/uploads",
-                            {
-                                method: "POST",
-                                body: formData,
-                            }
-                        );
+                                try {
+                                    const response = await fetch(
+                                        "http://localhost:3000/api/uploads",
+                                        {
+                                            method: "POST",
+                                            headers:{
+                                                Authorization:`Bearer ${token}`
+                                            },
+                                            body: formData,
+                                        }
+                                    );
 
-                        const data = await response.json();
+                                    const data = await response.json();
 
-                        if (!response.ok) {
-                            throw new Error(
-                                data.message || "آپلود تصویر ناموفق بود"
-                            );
-                        }
+                                    if (!response.ok) {
+                                        throw new Error(
+                                            data.message || "آپلود تصویر ناموفق بود"
+                                        );
+                                    }
 
-                        const range = quill.getSelection(true);
+                                    const range = quill.getSelection(true);
 
-                        quill.insertEmbed(
-                            range.index,
-                            "image",
-                            `http://localhost:3000${data.imageUrl}`,
-                            "user"
-                        );
+                                    quill.insertEmbed(
+                                        range.index,
+                                        "image",
+                                        `http://localhost:3000${data.imageUrl}`,
+                                        "user"
+                                    );
 
-                        quill.setSelection(range.index + 1, 0);
-                    } catch (error) {
-                        console.error("خطای آپلود تصویر:", error);
-                        alert(error.message || "آپلود تصویر ناموفق بود");
-                    }
-                };
+                                    quill.setSelection(range.index + 1, 0);
+                                } catch (error) {
+                                    console.error("خطای آپلود تصویر:", error);
+                                    alert(error.message || "آپلود تصویر ناموفق بود");
+                                }
+                            };
+                        },
+                    },
+                },
             },
-        },
-    },
-},
 
 
         });

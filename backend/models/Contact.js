@@ -16,7 +16,21 @@ const contactSchema=new mongoose.Schema({
         type:String,
         required:true,
         trim:true
+    },
+    isReplied:{
+        type:Boolean,
+        default:false
+    },
+    replyText:{
+        type:String,
+        trim:true,
+        default:""
+    },
+    repliedAt:{
+        type:Date,
+        default:null
     }
+
 },
 {
     timestamps:true

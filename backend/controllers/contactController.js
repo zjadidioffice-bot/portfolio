@@ -35,4 +35,43 @@ async function getContacts(req,res) {
         })
     }
 }
-module.exports={createContact,getContacts}
+
+async function saveReply(req, res) {
+    try {
+        const { replyText } = req.body;
+        const { id } = req.params;
+
+        if (!replyText || !replyText.trim()) {
+            return res.status(400).json({
+                message: "متن پاسخ الزامی است."
+            });
+        }
+
+        const contact = await Contact.findById(id);
+
+        if (!contact) {
+            return res.status(404).json({
+                message: "پیام موردنظر پیدا نشد."
+            });
+        }
+
+        contact.replyText = replyText.trim();
+        contact.isReplied = true;
+        contact.repliedAt = new Date();
+
+        await contact.save();
+
+        res.status(200).json({
+            message: "پاسخ با موفقیت ثبت شد.",
+            contact
+        });
+    } catch (error) {
+        console.log("save reply error:", error.message);
+
+        res.status(500).json({
+            message: "ثبت پاسخ ناموفق بود."
+        });
+    }
+}
+
+module.exports={createContact,getContacts,saveReply}

@@ -12,6 +12,7 @@ import ProjectManagement from './admin/ProjectManagement'
 import MessagesManagement from './admin/MessagesManagement'
 import AdminLogin from './admin/AdminLogin'
 import AdminRoute from './admin/AdminRoute'
+import AdminLayout from './admin/AdminLayout'
 function App() {
 
   return (
@@ -81,7 +82,9 @@ function App() {
           path="/admin/articles"
           element={
             <AdminRoute>
-              <ArticlesManagement />
+              <AdminLayout>
+                <ArticlesManagement />
+              </AdminLayout>
             </AdminRoute>
           }
         />
@@ -89,7 +92,9 @@ function App() {
           path="/admin/projects"
           element={
             <AdminRoute>
-              <ProjectManagement />
+              <AdminLayout>
+                <ProjectManagement />
+              </AdminLayout>
             </AdminRoute>
           }
         />
@@ -97,7 +102,9 @@ function App() {
           path="/admin/messages"
           element={
             <AdminRoute>
-              <MessagesManagement />
+              <AdminLayout>
+                <MessagesManagement />
+              </AdminLayout>
             </AdminRoute>
           }
         />

@@ -8,6 +8,7 @@ function ProjectForm({ projectToEdit, onSave }) {
         demoUrl: "",
         featured: false
     });
+    const token = sessionStorage.getItem("adminToken");
 
     useEffect(() => {
         setFormData({
@@ -44,7 +45,8 @@ function ProjectForm({ projectToEdit, onSave }) {
             const response = await fetch(url, {
                 method,
                 headers: {
-                    "Content-Type": "application/json"
+                    "Content-Type": "application/json",
+                    Authorization:`Bearer ${token}`
                 },
                 body: JSON.stringify(formData)
             });
@@ -111,16 +113,16 @@ function ProjectForm({ projectToEdit, onSave }) {
             />
 
             <label htmlFor="featured">پروژه ویژه است؟
-            <input
-                type="checkbox"
-                name="featured"
-                checked={formData.featured}
-                onChange={handleChange}
-            />                
+                <input
+                    type="checkbox"
+                    name="featured"
+                    checked={formData.featured}
+                    onChange={handleChange}
+                />
             </label>
 
             <button type="submit">
-                {projectToEdit ? "ذخیره تغیرات": "ثبت پروژه" }
+                {projectToEdit ? "ذخیره تغیرات" : "ثبت پروژه"}
             </button>
         </form>
     );

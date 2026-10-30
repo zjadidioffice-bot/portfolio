@@ -1,15 +1,16 @@
-import { useState,useEffect } from "react";
+import { useState, useEffect } from "react";
 
 function ImageUpload({ value, onChange }) {
     const [preview, setPreview] = useState("")
     const [loading, setLoading] = useState(false)
     const [error, setError] = useState("");
-    
+    const token = sessionStorage.getItem("adminToken");
+
     useEffect(() => {
-    if (!value) {
-        setPreview("");
-    }
-}, [value]);
+        if (!value) {
+            setPreview("");
+        }
+    }, [value]);
 
     async function handleUpload(event) {
         const file = event.target.files[0];
@@ -25,6 +26,9 @@ function ImageUpload({ value, onChange }) {
                 "http://localhost:3000/api/uploads",
                 {
                     method: "POST",
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    },
                     body: formData
                 }
             );
@@ -44,10 +48,10 @@ function ImageUpload({ value, onChange }) {
         } finally {
             setLoading(false);
         }
-        
+
     }
     const imageSrc = preview ||
-            (value ? `http://localhost:3000${value}` : "");
+        (value ? `http://localhost:3000${value}` : "");
 
     return (
         <div>

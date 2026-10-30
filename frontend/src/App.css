@@ -43,11 +43,19 @@
       rgba(143, 115, 255, 0.3),
       transparent 35%),
     linear-gradient(135deg, #171d3a, #30245f);
+        display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 40px;
 }
 
 .hero-content {
-  width: min(100%, 1056px);
-  margin-inline: auto;
+    flex: 1;
+    max-width: 650px;
+    min-width: 0;
+    margin: 0;
+        width: 100%;
+    text-align: center;
 }
 
 .hero-greeting {
@@ -1623,5 +1631,520 @@
     .article-details-content {
         font-size: 1rem;
         line-height: 2;
+    }
+}
+
+/* هدر پنل مدیریت */
+.admin-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 16px;
+    padding: 16px 24px;
+    margin-bottom: 24px;
+    background-color: #ffffff;
+    border-bottom: 1px solid #e5e7eb;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.admin-header h2 {
+    margin: 0;
+    color: #333333;
+    font-size: 1.25rem;
+}
+
+.admin-header nav {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.admin-header nav a {
+    color: #444444;
+    text-decoration: none;
+    padding: 8px 12px;
+    border-radius: 6px;
+    transition: background-color 0.2s ease;
+}
+
+.admin-header nav a:hover {
+    background-color: #f3e8ff;
+    color: #7e22ce;
+}
+
+/* لینک صفحه فعال */
+.admin-header nav a.active {
+    background-color: #f3e8ff;
+    color: #7e22ce;
+    font-weight: 600;
+}
+
+.admin-header nav button {
+    border: none;
+    border-radius: 6px;
+    padding: 9px 14px;
+    background-color: #aa3bff;
+    color: #ffffff;
+    cursor: pointer;
+    font-size: 0.95rem;
+}
+
+.admin-header nav button:hover {
+    background-color: #8b25d9;
+}
+
+.admin-main {
+    padding: 0 24px 24px;
+}
+
+/* نمایش بهتر در موبایل */
+@media (max-width: 600px) {
+    .admin-header {
+        align-items: flex-start;
+        flex-direction: column;
+        padding: 16px;
+    }
+
+    .admin-header nav {
+        width: 100%;
+        gap: 8px;
+    }
+
+    .admin-header nav a {
+        padding: 8px;
+    }
+
+    .admin-main {
+        padding: 0 12px 20px;
+    }
+}
+
+/* صفحه ورود مدیر */
+.admin-login-page {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 24px;
+    box-sizing: border-box;
+    background: linear-gradient(135deg, #f8f5ff, #f0e5ff);
+    direction: rtl;
+}
+
+.admin-login-card {
+    width: 100%;
+    max-width: 420px;
+    padding: 36px;
+    box-sizing: border-box;
+    background-color: #ffffff;
+    border: 1px solid #eee5f8;
+    border-radius: 16px;
+    box-shadow: 0 12px 35px rgba(80, 35, 120, 0.12);
+}
+
+.admin-login-card h1 {
+    margin: 0 0 10px;
+    color: #30213d;
+    font-size: 1.7rem;
+    text-align: center;
+}
+
+.admin-login-description {
+    margin: 0 0 28px;
+    color: #777080;
+    text-align: center;
+    line-height: 1.8;
+}
+
+.admin-login-form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.admin-login-form label {
+    margin-top: 8px;
+    color: #403449;
+    font-size: 0.95rem;
+    font-weight: 600;
+}
+
+.admin-login-form input {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 12px 14px;
+    border: 1px solid #dcd2e7;
+    border-radius: 8px;
+    outline: none;
+    background-color: #fff;
+    color: #30213d;
+    font-size: 1rem;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.admin-login-form input:focus {
+    border-color: #aa3bff;
+    box-shadow: 0 0 0 3px rgba(170, 59, 255, 0.12);
+}
+
+.admin-login-form button {
+    width: 100%;
+    margin-top: 18px;
+    padding: 13px;
+    border: none;
+    border-radius: 8px;
+    background-color: #aa3bff;
+    color: #ffffff;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s, transform 0.2s;
+}
+
+.admin-login-form button:hover {
+    background-color: #8b25d9;
+}
+
+.admin-login-form button:active {
+    transform: scale(0.99);
+}
+
+.admin-login-error {
+    padding: 11px 13px;
+    border: 1px solid #fecaca;
+    border-radius: 8px;
+    background-color: #fef2f2;
+    color: #b91c1c;
+    font-size: 0.9rem;
+    line-height: 1.7;
+}
+
+@media (max-width: 480px) {
+    .admin-login-page {
+        padding: 16px;
+    }
+
+    .admin-login-card {
+        padding: 26px 20px;
+    }
+}
+/* جست‌وجوی صندوق پیام‌ها */
+.admin-messages-search {
+    position: relative;
+    width: 100%;
+    max-width: 480px;
+    margin: 0 0 28px;
+}
+
+.admin-messages-search input {
+    display: block;
+    width: 100%;
+    height: 48px;
+    box-sizing: border-box;
+    padding: 0 46px 0 16px;
+
+    color: #30213d;
+    background-color: #fff;
+
+    border: 1px solid #e5d9ef;
+    border-radius: 12px;
+
+    font-family: inherit;
+    font-size: 14px;
+
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.admin-messages-search input::placeholder {
+    color: #a39aaa;
+}
+
+.admin-messages-search input:focus {
+    border-color: #aa3bff;
+    box-shadow: 0 0 0 3px rgba(170, 59, 255, 0.10);
+}
+
+.admin-messages-search::before {
+    content: "⌕";
+    position: absolute;
+    right: 16px;
+    top: 50%;
+    transform: translateY(-55%);
+
+    color: #9675aa;
+    font-size: 27px;
+    pointer-events: none;
+}
+
+@media (max-width: 600px) {
+    .admin-messages-search {
+        max-width: 100%;
+    }
+}
+
+/* جست‌وجوی پیام‌ها */
+.admin-messages-search {
+    width: 100%;
+    max-width: 520px;
+    margin-bottom: 24px;
+}
+
+.admin-messages-search input {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 12px 14px;
+    border: 1px solid #d1d5db;
+    border-radius: 10px;
+    background: #fff;
+    font: inherit;
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.admin-messages-search input:focus {
+    border-color: #aa3bff;
+    box-shadow: 0 0 0 3px rgba(170, 59, 255, 0.12);
+}
+
+/* تعامل با کارت پیام */
+.admin-message-card {
+    cursor: pointer;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.admin-message-card:hover {
+    border-color: #aa3bff;
+    box-shadow: 0 4px 14px rgba(170, 59, 255, 0.10);
+}
+
+.admin-message-card:focus-visible {
+    outline: 2px solid #aa3bff;
+    outline-offset: 3px;
+}
+
+.admin-message-card.selected {
+    border: 2px solid #aa3bff;
+    background: #fcf9ff;
+}
+
+/* وضعیت پاسخ */
+.admin-message-status {
+    display: inline-block;
+    width: fit-content;
+    padding: 5px 10px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.admin-message-status.replied {
+    color: #166534;
+    background: #dcfce7;
+}
+
+.admin-message-status.not-replied {
+    color: #92400e;
+    background: #fef3c7;
+}
+
+/* پاسخ ثبت‌شده داخل کارت */
+.admin-message-reply {
+    padding: 14px;
+    border-right: 3px solid #aa3bff;
+    border-radius: 8px;
+    background: #faf7ff;
+}
+
+.admin-message-reply strong {
+    color: #7430a0;
+    font-size: 13px;
+}
+
+.admin-message-reply p {
+    margin-top: 8px !important;
+    color: #374151;
+    font-size: 13px;
+    line-height: 1.9;
+    white-space: pre-wrap;
+}
+
+.admin-message-reply small {
+    color: #6b7280;
+    font-size: 11px;
+}
+
+.admin-message-hint {
+    color: #8730c9;
+    font-size: 12px;
+}
+
+/* صفحه‌بندی */
+.admin-messages-pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 16px;
+    margin: 28px 0;
+}
+
+.admin-messages-pagination span {
+    color: #4b5563;
+    font-size: 14px;
+}
+
+.admin-messages-pagination button {
+    padding: 9px 18px;
+    border: 1px solid #aa3bff;
+    border-radius: 8px;
+    background: #fff;
+    color: #8730c9;
+    font: inherit;
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s;
+}
+
+.admin-messages-pagination button:hover:not(:disabled) {
+    background: #aa3bff;
+    color: #fff;
+}
+
+.admin-messages-pagination button:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+
+/* فرم پاسخ */
+.admin-reply-form {
+    scroll-margin-top: 30px;
+}
+
+.admin-reply-previous {
+    padding: 14px;
+    border-right: 3px solid #aa3bff;
+    border-radius: 8px;
+    background: #faf7ff;
+}
+
+@media (max-width: 600px) {
+    .admin-messages-search {
+        max-width: 100%;
+    }
+
+    .admin-messages-pagination {
+        gap: 10px;
+    }
+
+    .admin-messages-pagination button {
+        padding: 8px 14px;
+    }
+}
+.hero-image {
+    width: 300px;
+    height: 350px;
+    overflow: hidden;
+    border-radius: 20px;
+}
+
+.hero-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+}
+
+.hero-layout {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 60px;
+
+    width: 100%;
+    max-width: 1120px;
+    margin: 0 auto;
+
+    direction: rtl;
+}
+.hero-image {
+    flex-shrink: 0;
+    width: 380px;
+    height: 380px;
+    overflow: hidden;
+    border-radius: 200px;
+    border: 3px solid rgba(255, 255, 255, 0.25);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+}
+
+.hero-image img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+}
+
+
+.hero-description {
+    margin-right: auto;
+    margin-left: auto;
+}
+
+.hero-actions {
+    justify-content: center;
+}
+
+/* Responsive - Mobile */
+@media (max-width: 768px) {
+
+    .hero {
+        padding: 45px 20px;
+    }
+
+    .hero-layout {
+        flex-direction: column;
+        gap: 25px;
+        text-align: center;
+    }
+
+    .hero-image {
+        width: 220px;
+        height: 220px;
+        border-radius: 200px;
+    }
+
+    .hero-content {
+        width: 100%;
+        text-align: center;
+    }
+
+    .hero-greeting {
+        font-size: 15px;
+    }
+
+    .hero h1 {
+        font-size: 25px;
+        line-height: 1.7;
+    }
+
+    .hero-description {
+        font-size: 13px;
+        line-height: 1.9;
+        margin-right: auto;
+        margin-left: auto;
+    }
+
+    .hero-actions {
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .hero-button {
+        width: 100%;
+        max-width: 250px;
+        text-align: center;
     }
 }

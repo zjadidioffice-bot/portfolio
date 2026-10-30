@@ -47,40 +47,46 @@ function AdminLogin() {
     }
 
     return (
-        <main className="admin-login">
-            <h1>ورود مدیر سایت</h1>
+        <main className="admin-login-page">
+            <section className="admin-login-card">
+                <h1>ورود مدیر سایت</h1>
+                <p className="admin-login-description">
+                    برای ورود به پنل مدیریت اطلاعات حساب خود را وارد کنید...
+                </p>
+                <form className="admin-login-form" onSubmit={handleSubmit}>
+                    <div>
+                        <label htmlFor="email">ایمیل</label>
+                        <input
+                            id="email"
+                            type="email"
+                            value={email}
+                            onChange={(event) => setEmail(event.target.value)}
+                            autoComplete="username"
+                            required
+                        />
+                    </div>
 
-            <form onSubmit={handleSubmit}>
-                <div>
-                    <label htmlFor="email">ایمیل</label>
-                    <input
-                        id="email"
-                        type="email"
-                        value={email}
-                        onChange={(event) => setEmail(event.target.value)}
-                        autoComplete="username"
-                        required
-                    />
-                </div>
+                    <div>
+                        <label htmlFor="password">رمز عبور</label>
+                        <input
+                            id="password"
+                            type="password"
+                            value={password}
+                            onChange={(event) => setPassword(event.target.value)}
+                            autoComplete="current-password"
+                            required
+                        />
+                    </div>
 
-                <div>
-                    <label htmlFor="password">رمز عبور</label>
-                    <input
-                        id="password"
-                        type="password"
-                        value={password}
-                        onChange={(event) => setPassword(event.target.value)}
-                        autoComplete="current-password"
-                        required
-                    />
-                </div>
+                    {error && <p className="admin-login-error" role="alert">{error}</p>}
 
-                {error && <p role="alert">{error}</p>}
+                    <button type="submit" disabled={loading}>
+                        {loading ? "در حال ورود..." : "ورود"}
+                    </button>
+                </form>
+            </section>
 
-                <button type="submit" disabled={loading}>
-                    {loading ? "در حال ورود..." : "ورود"}
-                </button>
-            </form>
+
         </main>
     );
 }
