@@ -72,8 +72,8 @@ function ArticleForm({ articleToEdit, onSave }) {
         try {
             const url = articleToEdit
                 ?
-                `http://localhost:3000/api/articles/${articleToEdit._id}`
-                : "http://localhost:3000/api/articles";
+                `/api/articles/${articleToEdit._id}`
+                : "/api/articles";
             const response = await fetch(url, {
                 method: articleToEdit ? "PUT" : "POST",
                 headers: {

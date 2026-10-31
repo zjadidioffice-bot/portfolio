@@ -11,7 +11,7 @@ function ProjectManagement() {
     async function fetchProjects() {
         try {
             const response = await fetch(
-                "http://localhost:3000/api/projects"
+                "/api/projects"
             );
             if (!response.ok) {
                 throw new Error("دریافت پروژه ناموفق بود....")
@@ -37,7 +37,7 @@ function ProjectManagement() {
         if (!confirmed) { return; }
         try {
             const response = await fetch(
-                `http://localhost:3000/api/projects/${id}`,
+                `/api/projects/${id}`,
                 {
                     method: "DELETE",
                     headers: {
@@ -80,7 +80,7 @@ function ProjectManagement() {
                         <h3>{project.title}</h3>
                         {project.image && (
                             <img
-                                src={`http://localhost:3000${project.image}`}
+                                src={project.image}
                                 alt={project.title}
                                 style={{
                                     width: "180px",

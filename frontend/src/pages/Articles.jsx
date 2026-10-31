@@ -20,7 +20,7 @@ function Articles() {
         setLoading(true);
         setError("");
 
-        fetch(`http://localhost:3000/api/articles?${params.toString()}`)
+        fetch(`/api/articles?${params.toString()}`)
             .then((response) => {
                 if (!response.ok) {
                     throw new Error("دریافت مقالات ناموفق بود");
@@ -105,7 +105,7 @@ function Articles() {
                                     </h2>
                                     {article.image && (
                                         <img
-                                            src={`http://localhost:3000${article.image}`}
+                                            src={article.image}
                                             alt={article.title}
                                             className="article-card-image"
                                         />

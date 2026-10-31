@@ -24,7 +24,7 @@ function MessagesManagement() {
             setLoading(true);
 
             const response = await fetch(
-                "http://localhost:3000/api/contact",
+                "/api/contact",
                 {
                     headers: {
                         Authorization: `Bearer ${token}`
@@ -112,7 +112,7 @@ function MessagesManagement() {
 
         try {
             const response = await fetch(
-                `http://localhost:3000/api/contact/${replyTo._id}/reply`,
+                `/api/contact/${replyTo._id}/reply`,
                 {
                     method: "PATCH",
                     headers: {

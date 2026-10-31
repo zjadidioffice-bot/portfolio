@@ -11,7 +11,7 @@ function ArticleDetails() {
         setLoading(true);
         setError("");
 
-        fetch(`http://localhost:3000/api/articles/slug/${encodeURIComponent(slug)}`)
+        fetch(`/api/articles/slug/${encodeURIComponent(slug)}`)
             .then((response) => {
                 if (!response.ok) {
                     throw new Error("دریافت مقالات ناموفق بود");
@@ -52,7 +52,7 @@ function ArticleDetails() {
                 {article.image && (
                     <img
                         className="article-details-image"
-                        src={`http://localhost:3000${article.image}`}
+                        src={article.image}
                         alt={article.title}
 
                     />

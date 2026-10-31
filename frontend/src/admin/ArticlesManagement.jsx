@@ -30,7 +30,7 @@ function ArticlesManagement() {
     async function fetchArticles() {
         try {
             const response = await fetch(
-                "http://localhost:3000/api/articles/admin",
+                "/api/articles/admin",
                 {
                     headers:{
                         Authorization:`Bearer ${token}`
@@ -61,7 +61,7 @@ function ArticlesManagement() {
         if (!confirmed) { return; }
         try {
             const response = await fetch(
-                `http://localhost:3000/api/articles/${id}`,
+                `/api/articles/${id}`,
                 {
                     method: "DELETE",
                     headers:{
@@ -124,7 +124,7 @@ function ArticlesManagement() {
                             <h3 >{article.title}</h3>
                             {article.image && (
                                 <img
-                                    src={`http://localhost:3000${article.image}`}
+                                    src={article.image}
                                     alt={article.title}
                                     style={{
                                         width: "100%",

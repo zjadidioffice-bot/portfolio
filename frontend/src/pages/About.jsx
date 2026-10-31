@@ -62,12 +62,12 @@ function About() {
 
                     <article className="skill-card">
                         <h3>طراحی سایت و آموزش</h3>
-                        <p>WordPress، Elementor و تدریس مباحث کامپیوتر</p>
+                        <p>WordPress و Elementor و   تدریس برنامه نویسی</p>
                     </article>
 
                     <article className="skill-card">
                         <h3>برنامه‌نویسی</h3>
-                        <p>C++، C# و توسعه اپلیکیشن اندروید</p>
+                        <p>C و C++ و C# و توسعه اپلیکیشن اندرویدی</p>
                     </article>
 
                     <article className="skill-card">
@@ -86,14 +86,12 @@ function About() {
                 <div className="experience-list">
                     <article className="experience-card">
                         <p className="experience-date">۱۴۰۴ تاکنون</p>
-                        <h3>مدیر تضمین کیفیت</h3>
+                        <h3>کارشناس تحلیل داده و تضمین کیفیت وب‌سرویس‌ها</h3>
                         <p className="experience-company">
                             سازمان بیمه سلامت ایران
                         </p>
                         <p>
-                            فعالیت در حوزه تحلیل و تضمین کیفیت نرم‌افزار و
-                            بررسی عملکرد سامانه‌ها.
-                        </p>
+                            تحلیل داده‌های حوزه سلامت، تهیه گزارش‌های آماری و مدیریتی، بررسی و کنترل کیفیت عملکرد وب‌سرویس‌ها و پیگیری مسائل مرتبط با صحت و یکپارچگی تبادل داده‌ها.                        </p>
                     </article>
 
                     <article className="experience-card">
@@ -111,7 +109,7 @@ function About() {
                         <h3>مدرس کامپیوتر</h3>
                         <p className="experience-company">دانشگاه سمنان</p>
                         <p>
-                            تدریس مباحث کامپیوتر و برنامه‌نویسی در محیط دانشگاهی.
+                            تدریس مباحث کامپیوتر و برنامه‌نویسی در دانشگاه سراسری سمنان.
                         </p>
                     </article>
 
@@ -135,14 +133,15 @@ function About() {
 
                 <div className="education-grid">
                     <article className="education-card">
+                        <h3>کارشناسی مهندسی نرم‌افزار</h3>
+                        <p>دانشگاه سمنان</p>
+                    </article>
+                    <article className="education-card">
                         <h3>کارشناسی ارشد هوش مصنوعی</h3>
                         <p>دانشگاه سمنان</p>
                     </article>
 
-                    <article className="education-card">
-                        <h3>کارشناسی مهندسی نرم‌افزار</h3>
-                        <p>تحصیلات دانشگاهی در حوزه مهندسی نرم‌افزار</p>
-                    </article>
+
                 </div>
             </section>
         </main>

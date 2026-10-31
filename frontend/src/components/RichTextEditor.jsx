@@ -62,7 +62,7 @@ function RichTextEditor({ value, onChange }) {
 
                                 try {
                                     const response = await fetch(
-                                        "http://localhost:3000/api/uploads",
+                                        "/api/uploads",
                                         {
                                             method: "POST",
                                             headers:{
@@ -85,7 +85,7 @@ function RichTextEditor({ value, onChange }) {
                                     quill.insertEmbed(
                                         range.index,
                                         "image",
-                                        `http://localhost:3000${data.imageUrl}`,
+                                        data.imageUrl,
                                         "user"
                                     );
 

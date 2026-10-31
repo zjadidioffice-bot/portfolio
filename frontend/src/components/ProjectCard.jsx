@@ -3,7 +3,7 @@ function ProjectCard({ title, description, demoUrl, image }) {
         <article className="project-card">
             {image && (
                 <img
-                    src={`http://localhost:3000${image}`}
+                    src={image}
                     alt={title}
 
                 />

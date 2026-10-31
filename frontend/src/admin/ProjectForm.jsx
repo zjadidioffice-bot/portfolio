@@ -38,8 +38,8 @@ function ProjectForm({ projectToEdit, onSave }) {
             return;
         }
         const url = projectToEdit
-            ? `http://localhost:3000/api/projects/${projectToEdit._id}`
-            : "http://localhost:3000/api/projects";
+            ? `/api/projects/${projectToEdit._id}`
+            : "/api/projects";
         const method = projectToEdit ? "PUT" : "POST"
         try {
             const response = await fetch(url, {

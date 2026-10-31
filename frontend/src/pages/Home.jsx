@@ -10,7 +10,7 @@ function Home() {
     const [articlesLoading, setArticlesLoading] = useState(true);
     const [articlesError, setArticlesError] = useState("")
     useEffect(() => {
-        fetch("http://localhost:3000/api/projects")
+        fetch("/api/projects")
             .then((response) => {
                 if (!response.ok) {
                     throw new Error("failed to load projects")
@@ -25,7 +25,7 @@ function Home() {
     }, []);
 
     useEffect(() => {
-        fetch("http://localhost:3000/api/articles")
+        fetch("/api/articles")
             .then((response) => {
                 if (!response.ok) {
                     throw new Error("دریافت مقالات ناموفق بود");
@@ -147,7 +147,7 @@ function Home() {
                             <article className="article-card" key={article._id}>
                                 {article.image && (
                                     <img
-                                        src={`http://localhost:3000${article.image}`}
+                                        src={article.image}
                                         alt={article.title}
                                     />
                                 )}

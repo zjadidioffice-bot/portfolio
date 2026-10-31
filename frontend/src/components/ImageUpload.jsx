@@ -23,7 +23,7 @@ function ImageUpload({ value, onChange }) {
         formData.append("image", file);
         try {
             const response = await fetch(
-                "http://localhost:3000/api/uploads",
+                "/api/uploads",
                 {
                     method: "POST",
                     headers: {
@@ -50,8 +50,7 @@ function ImageUpload({ value, onChange }) {
         }
 
     }
-    const imageSrc = preview ||
-        (value ? `http://localhost:3000${value}` : "");
+    const imageSrc = preview ||value|| "";
 
     return (
         <div>
