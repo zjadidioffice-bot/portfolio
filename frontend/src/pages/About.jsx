@@ -13,28 +13,38 @@ function About() {
                 </button>
             </div>
             <section className="about-intro">
-                <p className="about-label">درباره من</p>
-                <h1>
-                    {language === "fa"
-                        ? "سلام، من زهرا جدیدی هستم"
-                        : "Hi, I'm Zahra Jadidi"}
-                </h1>
-                <h2>
-                    {language === "fa"
-                        ? "متخصص فناوری اطلاعات، توسعه‌دهنده نرم‌افزار و علاقه‌مند به هوش مصنوعی"
-                        : "IT Professional, Software Developer & AI Enthusiast"}
-                </h2>
-                <p>
-                    {language === "fa"
-                        ? "فارغ‌التحصیل کارشناسی مهندسی نرم‌افزار و کارشناسی ارشد هوش مصنوعی هستم. تجربه فعالیت در مدیریت فناوری اطلاعات بیمارستان، تضمین کیفیت نرم‌افزار، تدریس دانشگاهی و توسعه وب دارم."
-                        : "I hold a bachelor's degree in Software Engineering and a master's degree in Artificial Intelligence. My experience includes hospital IT management, software quality assurance, university teaching, and web development."}
-                </p>
+                <div className="about-image">
+                    <img
+                    src="/images/zahrajadidi2.png"
+                    alt="zahra jadidi"
+                    />
+                </div>
+                <div className="about-content">
+                    <p className="about-label">درباره من</p>
+                    <h1>
+                        {language === "fa"
+                            ? "سلام، من زهرا جدیدی هستم"
+                            : "Hi, I'm Zahra Jadidi"}
+                    </h1>
+                    <h2>
+                        {language === "fa"
+                            ? "متخصص فناوری اطلاعات، توسعه‌دهنده نرم‌افزار و علاقه‌مند به هوش مصنوعی"
+                            : "IT Professional, Software Developer & AI Enthusiast"}
+                    </h2>
+                    <p>
+                        {language === "fa"
+                            ? "فارغ‌التحصیل کارشناسی مهندسی نرم‌افزار و کارشناسی ارشد هوش مصنوعی هستم. تجربه فعالیت در مدیریت فناوری اطلاعات بیمارستان، تضمین کیفیت نرم‌افزار، تدریس دانشگاهی و توسعه وب دارم."
+                            : "I hold a bachelor's degree in Software Engineering and a master's degree in Artificial Intelligence. My experience includes hospital IT management, software quality assurance, university teaching, and web development."}
+                    </p>
 
-                <p>
-                    {language === "fa"
-                        ? "به حل مسئله، یادگیری فناوری‌های جدید و ساخت راهکارهای کاربردی علاقه‌مندم. همچنین در سال ۲۰۲۱ مجموعه آموزشی iLearn را با هدف آموزش فناوری تأسیس کردم."
-                        : "I'm passionate about problem-solving, learning new technologies, and building practical solutions. In 2021, I founded iLearn, an initiative focused on technology education."}
-                </p>
+                    <p>
+                        {language === "fa"
+                            ? "به حل مسئله، یادگیری فناوری‌های جدید و ساخت راهکارهای کاربردی علاقه‌مندم. همچنین در سال 1405 مجموعه آموزشی iLearn را با هدف آموزش فناوری تأسیس کردم."
+                            : "I'm passionate about problem-solving, learning new technologies, and building practical solutions. In 2021, I founded iLearn, an initiative focused on technology education."}
+                    </p>
+                </div>
+
+
             </section>
 
             <section className="about-skills">
